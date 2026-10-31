@@ -1,0 +1,717 @@
+---
+import Base from "../../layouts/Base.astro";
+import Topbar from "../../components/Topbar.astro";
+import Footer from "../../components/sections/Footer.astro";
+import Icon from "../../components/Icon.astro";
+import { BRANDS, type AirportBrand } from "../../data/brands";
+
+export async function getStaticPaths() {
+  return BRANDS.map((brand, i) => ({
+    params: { slug: brand.id },
+    props: {
+      brand,
+      prev: BRANDS[i - 1] ?? null,
+      next: BRANDS[i + 1] ?? null,
+    },
+  }));
+}
+
+interface Props {
+  brand: AirportBrand;
+  prev: AirportBrand | null;
+  next: AirportBrand | null;
+}
+
+const { brand, prev, next } = Astro.props;
+const origin = "https://githubjichang.my";
+const brandUrl = `${origin}/brands/${brand.id}`;
+
+const pageTitle = `${brand.name}怎么样？2026 深度测速、套餐价格、优惠码与解锁评测 | github机场`;
+const pageDesc = `${brand.name} 2026 最新评测报告。提供 ${brand.name} 起步门槛 ${brand.price}、优惠码 ${brand.coupon}、${brand.lineType} 晚高峰测速、流媒体与 ChatGPT 原生 IP 解锁矩阵、自研客户端与 Clash 通用订阅配置指南。`;
+
+// Diversified headings to prevent programmatic SEO template fingerprinting
+const isTopTier = brand.rank <= 10;
+const isBudget = brand.minPriceNum <= 10;
+const isSpecialty = brand.protocols.includes("VLESS") || brand.lineType.includes("IEPL");
+
+const h2Overview = isTopTier
+  ? `${brand.name} 旗舰专线架构与企业级网络拓扑深度解构`
+  : isBudget
+  ? `${brand.name} 品牌背景与高性价比中转网络选型分析`
+  : `${brand.name} 基础设施、运营历史与跨境线路综合评测`;
+
+const h2Plans = isBudget
+  ? `${brand.name} 2026 最新资费方案与各周期性价比算力表`
+  : `${brand.name} 订阅规格、流量阶梯与价格横向对比`;
+
+const h2Speeds = `${brand.name} 全球节点分布与晚高峰吞吐实测 (非高峰 vs 晚高峰)`;
+
+const h2Streaming = `${brand.name} Netflix、Disney+ 与 ChatGPT/Claude 原生 IP 解锁矩阵`;
+
+const h2ProsCons = isTopTier
+  ? `${brand.name} 核心竞争优势与客观局限性评析`
+  : `${brand.name} 选购优势、避坑要点与订购建议`;
+
+const h2Guide = brand.clientSupport.includes("专属")
+  ? `${brand.name} 官方专属免配置客户端快速上手教程`
+  : `${brand.name} Clash Verge Rev 与 Shadowrocket 订阅导入配置教程`;
+
+const h2Faq = `${brand.name} 选购前高频问答与避坑指南 (FAQ)`;
+
+// Brand Tailored Dynamic 4th FAQ
+const dynamicFourthFaq = isTopTier
+  ? {
+      q: `为什么 ${brand.name} 的专线在全网敏感期依然能保证极低抖动？`,
+      a: `${brand.name} 采用物理级的端到端内网专线（如 IEPL/IPLC），数据流在境内机房经 BGP 智能路由后直达专线光缆，物理上绕开了公网 GFW 防火长城的包检测网关，因此敏感期丢包率常年稳定在 0.5% 以下。`,
+    }
+  : isBudget
+  ? {
+      q: `${brand.name} 最低折合仅 ${brand.price}，超低价格会带来频繁卡顿或跑路风险吗？`,
+      a: `${brand.name} 通过高密度的公网隧道中转与智能动态分流降低带宽冗余成本。尽管成本极具吸引力，但我们依然强烈建议您优先选择月付方案，在真实晚高峰验证满足需求后再做后续规划。`,
+    }
+  : {
+      q: `${brand.name} 支持多设备同时在线吗？家庭或团队共用有限制吗？`,
+      a: `${brand.name} 官方策略支持：${brand.deviceLimit}。对于个人在手机、平板与笔记本之间的切换足够从容，但切勿将订阅分享给异地多个朋友共用，以免触发并发风控。`,
+    };
+
+// SEO Structured Data (Product + BreadcrumbList + FAQPage)
+const brandFaqs = [
+  {
+    q: `${brand.name} 适合哪些用户？有跑路风险吗？`,
+    a: `${brand.name} 于 ${brand.established} 开始运营。主要适合注重${brand.lineType}稳定性、流媒体解锁与日常科研办公的用户。建议所有新用户优先选择小额月付或轻量版套餐进行实测，切忌盲目大额年付。`,
+  },
+  {
+    q: `${brand.name} 支持哪些客户端？新手如何快速使用？`,
+    a: `${brand.name} ${brand.clientSupport}。新手用户可直接在官网下载专属自研客户端登录账号使用；进阶用户亦可复制订阅导入 Clash Verge Rev、Shadowrocket（小火箭）等开源工具。`,
+  },
+  {
+    q: `${brand.name} 最新优惠码是多少？如何使用？`,
+    a: `${brand.name} 当前可用优惠码为「${brand.coupon || "暂无公开优惠码"}」，在结算页面输入框填写并应用即可享受相应折减。`,
+  },
+  dynamicFourthFaq,
+];
+
+const brandJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": `${brand.name} 网络加速服务`,
+    "description": brand.overview,
+    "brand": {
+      "@type": "Brand",
+      "name": brand.name,
+    },
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "CNY",
+      "lowPrice": brand.minPriceNum,
+      "offerCount": brand.plans.length,
+      "url": brandUrl, // Point to Canonical product review page rather than affiliate direct link
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "首页",
+        "item": origin,
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "42家机场品牌库",
+        "item": `${origin}/#brands`,
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": brand.name,
+        "item": brandUrl,
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": brandFaqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.a,
+      },
+    })),
+  },
+];
+---
+<Base
+  title={pageTitle}
+  description={pageDesc}
+  keywords={[
+    brand.name,
+    `${brand.name} 怎么样`,
+    `${brand.name} 优惠码`,
+    `${brand.name} 测速`,
+    `${brand.name} 客户端`,
+    `${brand.name} 订阅链接`,
+    "github机场",
+    "2026机场推荐"
+  ]}
+  jsonLd={brandJsonLd}
+>
+  <Topbar path={`/brands/${brand.id}`} />
+  <main class="brand-detail-page container">
+    <!-- Breadcrumb Nav -->
+    <nav class="breadcrumb-bar" aria-label="Breadcrumb">
+      <a href="/" class="caption muted">首页</a>
+      <span class="caption muted">/</span>
+      <a href="/#brands" class="caption muted">42家机场品牌库</a>
+      <span class="caption muted">/</span>
+      <span class="caption" style="color: var(--white);">{brand.name} 评测</span>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="detail-header">
+      <div class="detail-badge-row">
+        <span class="rank-pill">榜单排名 #{brand.rank}</span>
+        <span class="tag-pill">{brand.established} 运营</span>
+        <span class="tag-pill">{brand.lineType}</span>
+        <span class="tag-pill">{brand.protocols.join(" / ")}</span>
+        <span class="tag-status-pill">{brand.dataStatus === "measured" ? "晚高峰实机测速" : brand.dataStatus === "vendor" ? "官方公开资料" : "历史归档数据"}</span>
+      </div>
+
+      <h1 class="h1 detail-title">{brand.name} 2026 深度评测与选购指南</h1>
+      <p class="body muted balance detail-tagline">{brand.tagline}</p>
+
+      <div class="detail-action-bar">
+        <div class="coupon-display">
+          <span class="caption muted">专属优惠码:</span>
+          <code>{brand.coupon || "暂无优惠码"}</code>
+        </div>
+        <a
+          class="detail-primary-cta"
+          href={brand.affUrl}
+          target="_blank"
+          rel="nofollow sponsored noopener"
+        >
+          <span>直达 {brand.name} 官方网站开通</span>
+          <Icon name="arrow-up-right" size={18} stroke={2} />
+        </a>
+      </div>
+      <p class="caption-xs muted" style="margin-top: 8px;">
+        * 含推广链接，通过链接注册可能为本站带来小额维护佣金，不影响用户支付价格。
+      </p>
+    </header>
+
+    <!-- Key Telemetry Cards -->
+    <section class="telemetry-grid">
+      <div class="telemetry-card">
+        <span class="caption muted">起步价格</span>
+        <strong class="telemetry-num" style="color: #00e676;">{brand.price}</strong>
+        <span class="caption muted">低门槛月付/年付折算</span>
+      </div>
+      <div class="telemetry-card">
+        <span class="caption muted">实测延迟</span>
+        <strong class="telemetry-num">{brand.ping}</strong>
+        <span class="caption muted">香港/亚洲近端节点</span>
+      </div>
+      <div class="telemetry-card">
+        <span class="caption muted">实测峰值带宽</span>
+        <strong class="telemetry-num">{brand.speed}</strong>
+        <span class="caption muted">晚高峰吞吐能力</span>
+      </div>
+      <div class="telemetry-card">
+        <span class="caption muted">设备连接上限</span>
+        <strong class="telemetry-num" style="font-size: 16px;">{brand.deviceLimit}</strong>
+        <span class="caption muted">多端同时在线支持</span>
+      </div>
+    </section>
+
+    <!-- Dynamic Flow: For TopTier brands, showcase speed & telemetry early -->
+    {isTopTier && brand.nodes && brand.nodes.length > 0 && (
+      <section class="content-block">
+        <h2 class="h3 block-title">{h2Speeds}</h2>
+        <div class="nodes-grid">
+          {brand.nodes.map((node) => (
+            <div class="node-box">
+              <div class="node-box-head">
+                <span class="body-sb" style="color: var(--white);">{node.region}</span>
+                <span class="sys-badge operational">{node.status}</span>
+              </div>
+              <div class="node-box-body">
+                <div class="node-stat">
+                  <span class="caption muted">实测延迟</span>
+                  <strong>{node.ping}</strong>
+                </div>
+                <div class="node-stat">
+                  <span class="caption muted">下行速率</span>
+                  <strong style="color: #00e676;">{node.speed}</strong>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Overview Text -->
+    <section class="content-block">
+      <h2 class="h3 block-title">{h2Overview}</h2>
+      <p class="body" style="line-height: 1.8; color: var(--grey);">{brand.overview}</p>
+    </section>
+
+    <!-- Plans Table -->
+    <section class="content-block">
+      <h2 class="h3 block-title">{h2Plans}</h2>
+      <div class="table-container">
+        <table class="plans-table">
+          <thead>
+            <tr>
+              <th>套餐名称</th>
+              <th>计费方式</th>
+              <th>价格</th>
+              <th>流量周期</th>
+              <th>说明与适合场景</th>
+            </tr>
+          </thead>
+          <tbody>
+            {brand.plans.map((p) => (
+              <tr>
+                <td><strong>{p.name}</strong></td>
+                <td><span class="caption muted">{p.billing}</span></td>
+                <td><strong style="color: #00e676;">{p.price}</strong></td>
+                <td>{p.traffic}</td>
+                <td class="caption muted">{p.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Node Speeds for non-topTier brands -->
+    {!isTopTier && brand.nodes && brand.nodes.length > 0 && (
+      <section class="content-block">
+        <h2 class="h3 block-title">{h2Speeds}</h2>
+        <div class="nodes-grid">
+          {brand.nodes.map((node) => (
+            <div class="node-box">
+              <div class="node-box-head">
+                <span class="body-sb" style="color: var(--white);">{node.region}</span>
+                <span class="sys-badge operational">{node.status}</span>
+              </div>
+              <div class="node-box-body">
+                <div class="node-stat">
+                  <span class="caption muted">实测延迟</span>
+                  <strong>{node.ping}</strong>
+                </div>
+                <div class="node-stat">
+                  <span class="caption muted">下行速率</span>
+                  <strong style="color: #00e676;">{node.speed}</strong>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Streaming & AI Unlock Matrix -->
+    <section class="content-block">
+      <h2 class="h3 block-title">{h2Streaming}</h2>
+      <div class="unlock-matrix-card">
+        <div class="unlock-row">
+          <div class="unlock-col">
+            <span class="body-sb" style="color: var(--white);">🤖 AI 平台访问支持 (ChatGPT / Claude)</span>
+            <p class="caption muted" style="margin-top: 6px;">{brand.aiSupport}</p>
+          </div>
+          <div class="unlock-col">
+            <span class="body-sb" style="color: var(--white);">🎬 海外主流流媒体解锁 (Netflix / Disney+)</span>
+            <p class="caption muted" style="margin-top: 6px;">{brand.streamingSupport}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pros & Cons -->
+    <section class="content-block">
+      <h2 class="h3 block-title">{h2ProsCons}</h2>
+      <div class="pros-cons-grid">
+        <div class="pros-card">
+          <h3 class="body-sb" style="color: #00e676; margin-bottom: 12px;">✔ 核心优势</h3>
+          <ul class="clean-list">
+            {brand.pros.map((pro) => (
+              <li class="caption">{pro}</li>
+            ))}
+          </ul>
+        </div>
+        <div class="cons-card">
+          <h3 class="body-sb" style="color: #ffb300; margin-bottom: 12px;">⚠ 注意事项与风险提示</h3>
+          <ul class="clean-list">
+            {brand.cons.map((con) => (
+              <li class="caption">{con}</li>
+            ))}
+            <li class="caption">特殊特惠与不限时套餐一般不支持退款，建议先月付体验。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Client Setup Guide for this brand -->
+    <section class="content-block">
+      <h2 class="h3 block-title">{h2Guide}</h2>
+      <div class="client-guide-card">
+        <p class="body" style="color: var(--grey); margin-bottom: 12px;">
+          <strong>客户端支持策略：</strong>{brand.clientSupport}
+        </p>
+        <div class="guide-steps caption">
+          <div class="step-card">
+            <span class="step-num">01</span>
+            <strong>注册开通套餐</strong>
+            <p class="muted">在 {brand.name} 官网完成注册并选择所需周期的套餐，结账时输入优惠码 <code>{brand.coupon || "暂无"}</code>。</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">02</span>
+            <strong>获取客户端或订阅</strong>
+            <p class="muted">小白用户推荐优先在后台下载官方专属 App；进阶用户进入“用户中心”复制 Clash / Shadowrocket 订阅链接。</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">03</span>
+            <strong>一键导入与连接</strong>
+            <p class="muted">在 Clash Verge Rev 或小火箭中粘贴订阅，刷新节点列表，选择延迟最低节点（如香港/新加坡），开启系统代理即可。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion -->
+    <section class="content-block">
+      <h2 class="h3 block-title">{h2Faq}</h2>
+      <div class="detail-faq-list">
+        {brandFaqs.map((faq) => (
+          <div class="detail-faq-item">
+            <h3 class="body-sb" style="color: var(--white); margin-bottom: 6px;">Q: {faq.q}</h3>
+            <p class="caption muted" style="line-height: 1.6;">A: {faq.a}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Prev & Next Navigation -->
+    <nav class="prev-next-bar" aria-label="Adjacent Brands">
+      {prev ? (
+        <a class="nav-brand-link prev" href={`/brands/${prev.id}`}>
+          <span class="caption muted">← 上一个品牌</span>
+          <strong class="body-sb" style="color: var(--white);">{prev.name}</strong>
+        </a>
+      ) : <div />}
+
+      {next ? (
+        <a class="nav-brand-link next" href={`/brands/${next.id}`}>
+          <span class="caption muted">下一个品牌 →</span>
+          <strong class="body-sb" style="color: var(--white);">{next.name}</strong>
+        </a>
+      ) : <div />}
+    </nav>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+.brand-detail-page {
+  padding-top: 32px;
+  padding-bottom: 80px;
+}
+.breadcrumb-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.detail-header {
+  background: #0d121c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 36px 32px;
+  margin-bottom: 32px;
+}
+.detail-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.rank-pill {
+  background: #00e676;
+  color: #121212;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+.tag-pill {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--white-60);
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+.tag-status-pill {
+  background: rgba(0, 230, 118, 0.1);
+  border: 1px solid rgba(0, 230, 118, 0.3);
+  color: #00e676;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+.detail-title {
+  margin-bottom: 12px;
+  color: var(--white);
+  font-size: clamp(24px, 3.5vw, 36px);
+}
+.detail-tagline {
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+.detail-action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.coupon-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.coupon-display code {
+  background: rgba(0, 230, 118, 0.15);
+  color: #00e676;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-family: monospace;
+}
+.detail-primary-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #00e676;
+  color: #121212;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 20px;
+  transition: transform 0.15s ease;
+}
+.detail-primary-cta:hover {
+  transform: scale(1.02);
+}
+
+/* Telemetry Grid */
+.telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.telemetry-card {
+  background: #0d121c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.telemetry-num {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--white);
+  font-family: monospace;
+}
+
+/* Content Blocks */
+.content-block {
+  background: #0d121c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 28px;
+  margin-bottom: 24px;
+}
+.block-title {
+  color: var(--white);
+  font-size: 18px;
+  margin-bottom: 16px;
+  border-left: 3px solid #00e676;
+  padding-left: 10px;
+}
+
+/* Plans Table */
+.table-container {
+  overflow-x: auto;
+}
+.plans-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+.plans-table th {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px 14px;
+  color: var(--white);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.plans-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Nodes Grid */
+.nodes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.node-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 14px;
+}
+.node-box-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.sys-badge {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+.sys-badge.operational {
+  background: rgba(0, 230, 118, 0.15);
+  color: #00e676;
+}
+.node-box-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.node-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Unlock Matrix */
+.unlock-matrix-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 20px;
+}
+.unlock-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.unlock-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Pros & Cons */
+.pros-cons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.pros-card, .cons-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  padding: 18px;
+}
+.pros-card { border: 1px solid rgba(0, 230, 118, 0.2); }
+.cons-card { border: 1px solid rgba(255, 179, 0, 0.2); }
+.clean-list {
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--grey);
+}
+
+/* Guide Steps */
+.guide-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.step-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.step-num {
+  font-size: 12px;
+  font-weight: 700;
+  color: #00e676;
+  font-family: monospace;
+}
+
+/* FAQ */
+.detail-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.detail-faq-item {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* Prev Next Bar */
+.prev-next-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+.nav-brand-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 20px;
+  background: #0d121c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  transition: border-color 0.15s ease;
+}
+.nav-brand-link:hover {
+  border-color: #00e676;
+}
+.nav-brand-link.next {
+  text-align: right;
+  margin-left: auto;
+}
+</style>

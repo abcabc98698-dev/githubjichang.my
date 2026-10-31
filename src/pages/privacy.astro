@@ -1,0 +1,179 @@
+---
+import Base from "../layouts/Base.astro";
+import Topbar from "../components/Topbar.astro";
+import Footer from "../components/sections/Footer.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../lib/site";
+
+const privacyJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "首页",
+        "item": "https://githubjichang.my",
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "隐私权政策与数据零留存声明",
+        "item": "https://githubjichang.my/privacy",
+      },
+    ],
+  },
+];
+---
+<Base
+  title={`隐私权政策与数据保护声明 | ${site.name}`}
+  description="github机场 官方隐私保护声明与零留存原则。本站坚决贯彻无跟踪、无第三方广告网络、不收集个人上网数据的原则，并提供透明的商业推广（Affiliate）披露。"
+  keywords={["隐私权政策", "数据零留存", "无跟踪承诺", "合规披露", "github机场"]}
+  jsonLd={privacyJsonLd}
+>
+  <Topbar path="/privacy" />
+  <main class="legal-page container">
+    <nav class="breadcrumb-bar" aria-label="Breadcrumb">
+      <a href="/" class="caption muted">首页</a>
+      <span class="caption muted">/</span>
+      <span class="caption" style="color: var(--white);">隐私权政策</span>
+    </nav>
+
+    <header class="legal-header">
+      <div class="legal-badge-row">
+        <span class="legal-badge">E-E-A-T TRUST & COMPLIANCE</span>
+        <span class="caption muted">最后修订：2026年10月 · 适用于所有访问用户</span>
+      </div>
+      <h1 class="h1 legal-title">隐私权政策与数据零留存声明</h1>
+      <p class="body muted balance legal-lead">
+        在 {site.name}（githubjichang.my），我们深知网络隐私是数字时代的基本权利。本政策阐明我们如何以最严格的技术手段捍卫您的访问隐私，以及本站在无第三方统计追踪器环境下的运作机制。
+      </p>
+    </header>
+
+    <article class="legal-article">
+      <section class="legal-section">
+        <h2 class="h3 section-title">1. 数据零留存承诺 (No-Logs Policy)</h2>
+        <p class="body text-p">
+          本站作为纯静态（Static Site Generation）技术测评观测台，<strong>不设立用户注册系统，不收集您的姓名、电话号码、身份证件或任何身份生物数据</strong>。当您浏览本站页面时，服务器仅在瞬时内存中处理 HTTP 请求，不记录包含个人身份识别信息的持久化访问日志。
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="h3 section-title">2. 彻底拒绝第三方广告追踪网络 (Zero-Tracker Guarantee)</h2>
+        <p class="body text-p">
+          绝大多数商业导航网站会植入 Google Analytics (GA4)、百度统计、Meta Pixel 或第三方跨站定向广告代码（AdSense）。<strong>本站 100% 拒绝植入任何第三方行为追踪脚本与广告重定向 Cookie</strong>。您在本站的每一次浏览与点击，都不会被任何商业数字广告商跨站跟踪或构建数字画像。
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="h3 section-title">3. 商业推广与透明度披露 (Affiliate Disclosure)</h2>
+        <p class="body text-p">
+          本站所收录的部分机场品牌链接包含合规的推广标识代码（Affiliate Link）。当您点击该类链接并完成订购时，第三方服务商可能会向本站支付小额佣金，用于维持本站自动化网络测速探针机房与带宽物理支出。<br/><br/>
+          <strong>我们郑重承诺：</strong>
+        </p>
+        <ul class="legal-list caption">
+          <li>推广关系绝不会额外增加您的实际购买费用，亦不会使您的折扣权益受损；</li>
+          <li>所有商业外链严格遵循搜索引擎标准声明 <code>rel="nofollow sponsored noopener"</code>；</li>
+          <li>评测榜单排序基于晚高峰丢包率、物理专线资质及运营年限等技术事实，严禁劣质跑路盘以付费形式插队置顶。</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="h3 section-title">4. 客户端与配置文件安全性声明</h2>
+        <p class="body text-p">
+          本站【免费资源】专题推荐的所有代理客户端（Clash Verge Rev、v2rayN、Sing-box 等）均严格指向官方经过公开安全审计的开源 GitHub Release 仓库，绝不托管或二次封装任何夹带木马、后门或广告插件的修改版安装包。建议用户下载后自行校验 SHA-256 哈希值。
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="h3 section-title">5. 隐私政策的更新与联络</h2>
+        <p class="body text-p">
+          我们保留根据国际数据合规法规与技术迭代随时修订本政策的权利。若对本政策有任何疑问或安全反馈，欢迎通过电子邮箱联络我们：<code class="code-tag">{site.email}</code>。
+        </p>
+      </section>
+    </article>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+.legal-page {
+  padding-top: 24px;
+  padding-bottom: 80px;
+}
+.breadcrumb-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.legal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 32px;
+  margin-bottom: 40px;
+}
+.legal-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.legal-badge {
+  background: rgba(0, 230, 118, 0.12);
+  color: #00e676;
+  border: 1px solid rgba(0, 230, 118, 0.3);
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.legal-title {
+  color: var(--white);
+  font-size: clamp(26px, 3.5vw, 36px);
+  margin-bottom: 16px;
+}
+.legal-lead {
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 800px;
+}
+.legal-article {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  max-width: 840px;
+}
+.legal-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.section-title {
+  color: var(--white);
+  font-size: 18px;
+  border-left: 3px solid #00e676;
+  padding-left: 10px;
+}
+.text-p {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14.5px;
+  line-height: 1.8;
+}
+.legal-list {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+}
+.code-tag {
+  background: rgba(255, 255, 255, 0.1);
+  color: #00e676;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+</style>

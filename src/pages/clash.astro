@@ -1,0 +1,156 @@
+---
+import Base from "../layouts/Base.astro";
+import Topbar from "../components/Topbar.astro";
+import Footer from "../components/sections/Footer.astro";
+import Icon from "../components/Icon.astro";
+
+const clashJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Clash 全平台客户端生态与配置全指南 · 核心原理与分流规则进阶",
+    "description": "2026 最新 Clash Verge Rev、Mihomo (Meta) 内核全平台配置指南。深度解析 Fake-IP 机制、TUN 虚拟网卡模式、ACL4SSR 分流规则集与常见报错解决方案。",
+    "url": "https://githubjichang.my/clash",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://githubjichang.my" },
+        { "@type": "ListItem", "position": 2, "name": "Clash 生态与配置", "item": "https://githubjichang.my/clash" }
+      ]
+    }
+  }
+];
+---
+<Base
+  title="Clash Verge Rev 官方配置指南 · Mihomo内核、分流规则与TUN模式全解 | github机场"
+  description="Clash 怎么用？深度解析 2026 最受推荐的开源客户端 Clash Verge Rev，包含多平台安装镜像、Mihomo 内核切换、Fake-IP 与 TUN 模式配置、ACL4SSR 分流规则以及端口冲突排查。"
+  keywords={["Clash下载", "Clash Verge Rev", "Mihomo内核", "Clash订阅转换", "Clash TUN模式", "github机场"]}
+  jsonLd={clashJsonLd}
+>
+  <Topbar path="/clash" />
+  <main class="category-page container">
+    <nav class="breadcrumb-bar" aria-label="Breadcrumb">
+      <a href="/" class="caption muted">首页</a>
+      <span class="caption muted">/</span>
+      <span class="caption" style="color: var(--white);">Clash 客户端生态</span>
+    </nav>
+
+    <header class="category-header">
+      <div class="category-tag-row">
+        <span class="category-badge">CLIENT CORE & RULES</span>
+        <span class="caption muted">Clash 核心与全平台客户端生态 · 规则分流原理</span>
+      </div>
+      <h1 class="h1 category-title">Clash 全平台客户端生态与分流规则指南</h1>
+      <p class="body muted balance category-lead">
+        自原版 Clash Core 停更以来，以 <strong>Mihomo（前身 Clash.Meta）</strong> 为内核的新一代客户端生态全面崛起。其中，基于 Tauri + Rust 架构的 <strong>Clash Verge Rev</strong> 凭借内存占用极低、UI 现代化与原生支持 VLESS / Hysteria 2 协议，成为当前全平台最受赞誉的开源首选。
+      </p>
+    </header>
+
+    <!-- Clash Architecture -->
+    <section class="content-section">
+      <h2 class="h3 section-title">一、Clash 核心四大运行机制通俗拆解</h2>
+      <div class="mechanisms-grid">
+        <div class="mech-card">
+          <span class="mech-num">01</span>
+          <h3 class="h4" style="color: var(--white);">Rule 智能分流机制</h3>
+          <p class="caption muted">
+            Clash 最强大的优势在于“不一刀切”。通过域名后缀（DOMAIN-SUFFIX）与中国 IP 库（GEOIP, CN），国内网站（微信、B站、银行）直接走本地宽带直连（DIRECT），海外网站自动走专线节点，兼顾极速与隐私。
+          </p>
+        </div>
+
+        <div class="mech-card">
+          <span class="mech-num">02</span>
+          <h3 class="h4" style="color: var(--white);">TUN 虚拟网卡接管</h3>
+          <p class="caption muted">
+            普通系统代理仅对支持 HTTP 代理的浏览器生效。开启 TUN 模式后，系统会在网络层虚拟出一张虚拟网卡，强制接管命令行 Git、游戏进程、Docker 容器等底层全部流量，实现真全局代理。
+          </p>
+        </div>
+
+        <div class="mech-card">
+          <span class="mech-num">03</span>
+          <h3 class="h4" style="color: var(--white);">Fake-IP 彻底防 DNS 污染</h3>
+          <p class="caption muted">
+            当应用请求域名时，Clash 在本地瞬间返回一个保留区虚拟 IP（如 198.18.0.1），同时将真实域名通过加密隧道发给远端专线服务器代为解析。彻底杜绝国内运营商 Local DNS 的污染与劫持。
+          </p>
+        </div>
+
+        <div class="mech-card">
+          <span class="mech-num">04</span>
+          <h3 class="h4" style="color: var(--white);">URL-Test 自动故障转移</h3>
+          <p class="caption muted">
+            通过设置定时健康检查，Clash 能够在毫秒级内自动检测各节点的延迟。一旦主力香港节点发生抖动，系统无感自动切换至备用新加坡节点，保障在线办公不断线。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Version Downloads -->
+    <section class="content-section">
+      <h2 class="h3 section-title">二、全平台推荐客户端正版安全镜像</h2>
+      <div class="clients-grid">
+        <div class="client-box">
+          <strong class="body-sb" style="color: var(--white);">Windows 首选：Clash Verge Rev</strong>
+          <p class="caption muted">基于 Tauri 开发，完美支持 Win 10/11 64位与 ARM64。内置自动服务提权与深色模式。</p>
+          <a href="/free#clients-mirror" class="link-download">官方纯净镜像与安全校验 →</a>
+        </div>
+
+        <div class="client-box">
+          <strong class="body-sb" style="color: var(--white);">macOS 首选：Clash Verge Rev (Apple Silicon)</strong>
+          <p class="caption muted">原生适配 M1/M2/M3/M4 系列芯片，极省电且完美支持系统托盘菜单控制。</p>
+          <a href="/free#clients-mirror" class="link-download">官方纯净镜像与安全校验 →</a>
+        </div>
+
+        <div class="client-box">
+          <strong class="body-sb" style="color: var(--white);">Android 首选：Clash Meta for Android (CMFA)</strong>
+          <p class="caption muted">基于 Meta 内核深度优化的安卓客户端，支持应用白名单绕过与快捷磁贴开关。</p>
+          <a href="/free#clients-mirror" class="link-download">官方纯净镜像与安全校验 →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Links -->
+    <section class="content-section">
+      <h2 class="h3 section-title">三、相关进阶配置专题</h2>
+      <div class="cluster-grid">
+        <a href="/faq-master#client-troubleshoot" class="cluster-card">
+          <span class="cluster-pill">故障排查</span>
+          <strong class="body-sb" style="color: var(--white);">7890 端口冲突与 TUN 断网解决 →</strong>
+          <p class="caption muted">100% 解决 Clash 报错 Handshake failed、端口被占用与驱动加载异常。</p>
+        </a>
+        <a href="/free#rules-repo" class="cluster-card">
+          <span class="cluster-pill">分流策略</span>
+          <strong class="body-sb" style="color: var(--white);">权威 ACL4SSR 规则集配置指南 →</strong>
+          <p class="caption muted">屏蔽广告、去隐私跟踪、流媒体媒体精准定向的最强规则集。</p>
+        </a>
+        <a href="/tutorial" class="cluster-card">
+          <span class="cluster-pill">订阅上手</span>
+          <strong class="body-sb" style="color: var(--white);">5 分钟订阅链接复制与导入教程 →</strong>
+          <p class="caption muted">新手如何将机场后台的 Subscription URL 导入客户端一键连通。</p>
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+.category-page { padding-top: 24px; padding-bottom: 80px; }
+.breadcrumb-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.category-header { border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 32px; margin-bottom: 36px; }
+.category-tag-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.category-badge { background: rgba(0, 230, 118, 0.12); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); font-family: monospace; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+.category-title { color: var(--white); font-size: clamp(26px, 3.5vw, 38px); margin-bottom: 14px; }
+.category-lead { font-size: 16px; line-height: 1.7; max-width: 860px; }
+.content-section { margin-bottom: 44px; }
+.section-title { color: var(--white); font-size: 20px; margin-bottom: 18px; border-left: 3px solid #00e676; padding-left: 10px; }
+.mechanisms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.mech-card { background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.mech-num { font-size: 13px; font-family: monospace; font-weight: 700; color: #00e676; }
+.clients-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.client-box { background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.link-download { color: #00e676; font-size: 13px; font-weight: 600; margin-top: auto; padding-top: 10px; }
+.cluster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.cluster-card { background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.16s ease; }
+.cluster-card:hover { border-color: #00e676; }
+.cluster-pill { font-size: 11px; font-family: monospace; color: #00e676; }
+</style>

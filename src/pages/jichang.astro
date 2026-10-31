@@ -1,0 +1,176 @@
+---
+import Base from "../layouts/Base.astro";
+import Topbar from "../components/Topbar.astro";
+import Footer from "../components/sections/Footer.astro";
+import Icon from "../components/Icon.astro";
+import { BRANDS } from "../data/brands";
+
+const jichangJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "2026 机场推荐与专线天梯榜 · 42 家主流品牌晚高峰测速全景横评",
+    "description": "基于 4 年实测探针数据，系统梳理 2026 年最具性价比与稳定性的 42 家机场品牌。涵盖 IEPL 物理专线、BGP 边界多线接入、原生住宅 IP 与全流媒体 AI 解锁横向评测。",
+    "url": "https://githubjichang.my/jichang",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://githubjichang.my" },
+        { "@type": "ListItem", "position": 2, "name": "机场推荐与天梯榜", "item": "https://githubjichang.my/jichang" }
+      ]
+    }
+  }
+];
+
+const topTierBrands = BRANDS.slice(0, 8);
+---
+<Base
+  title="2026 机场推荐天梯榜 · 42家专线机场晚高峰测速与防坑选购指南 | github机场"
+  description="2026 最新机场推荐排行榜。拒绝劣质月抛跑路盘，深度实测 42 家机场晚高峰单线程带宽、中港 20ms 极低延迟、ChatGPT 与 Netflix 原生 IP 解锁率，为您提供最权威的科学上网决策矩阵。"
+  keywords={["机场推荐", "2026机场推荐", "IEPL专线机场", "便宜机场", "稳定机场", "科学上网梯子", "github机场"]}
+  jsonLd={jichangJsonLd}
+>
+  <Topbar path="/jichang" />
+  <main class="category-page container">
+    <nav class="breadcrumb-bar" aria-label="Breadcrumb">
+      <a href="/" class="caption muted">首页</a>
+      <span class="caption muted">/</span>
+      <span class="caption" style="color: var(--white);">机场推荐与天梯榜</span>
+    </nav>
+
+    <header class="category-header">
+      <div class="category-tag-row">
+        <span class="category-badge">ANNUAL RANKING</span>
+        <span class="caption muted">晚高峰实机测速 · 4 年无故障专线观测 · 拒绝充值刷榜</span>
+      </div>
+      <h1 class="h1 category-title">2026 机场推荐与专线天梯榜选购指南</h1>
+      <p class="body muted balance category-lead">
+        市场上有数以千计的机场品牌，价格从“几块钱一年”到“上百元一月”不等。如何拨开营销迷雾，挑选出真正在敏感期不失联、晚高峰 4K 拖拽不缓冲的高质量专线？本专栏汇聚网络测评观测台的长期探针数据，为您呈现严谨、中立的梯队选型标准。
+      </p>
+    </header>
+
+    <!-- Tier Criteria Overview -->
+    <section class="content-section">
+      <h2 class="h3 section-title">一、2026 专线机场四大选型梯队</h2>
+      <div class="tiers-grid">
+        <div class="tier-card tier-t1">
+          <span class="tier-badge">T1 旗舰梯队</span>
+          <h3 class="h4" style="color: var(--white); margin: 6px 0;">企业级全物理专线 (IEPL/IPLC)</h3>
+          <p class="caption muted">
+            <strong>核心特征：</strong>入口部署三网 BGP 自动化故障漂移，过境完全走独立物理海底光缆，物理延迟极低（中港 25-35ms），全天候 0 丢包。<br/>
+            <strong>代表品牌：</strong>光速云 (2020老牌，99元/年，147永久套餐)、微风网络。
+          </p>
+        </div>
+
+        <div class="tier-card tier-t2">
+          <span class="tier-badge" style="background: rgba(0, 229, 255, 0.15); color: #00e5ff;">T2 稳健梯队</span>
+          <h3 class="h4" style="color: var(--white); margin: 6px 0;">BGP 隧道中转 + 专线混合</h3>
+          <p class="caption muted">
+            <strong>核心特征：</strong>入口具备良好的运营商优化，晚高峰单线程带宽可稳定在 300-500Mbps 以上，性价比较高，适合日常科研与 4K 追剧。<br/>
+            <strong>代表品牌：</strong>星岛梦、二猫云、唯兔云。
+          </p>
+        </div>
+
+        <div class="tier-card tier-t3">
+          <span class="tier-badge" style="background: rgba(255, 179, 0, 0.15); color: #ffb300;">T3 性价比梯队</span>
+          <h3 class="h4" style="color: var(--white); margin: 6px 0;">新手专属客户端与轻量包</h3>
+          <p class="caption muted">
+            <strong>核心特征：</strong>提供官方自研的一键直连 App（无需配置 Clash 复杂订阅），月均仅需 5-10 元，极适合轻度网页浏览与新手初学者。<br/>
+            <strong>代表品牌：</strong>飞猫云 (专属App，折后7元/月)、无忧链接。
+          </p>
+        </div>
+
+        <div class="tier-card tier-t4">
+          <span class="tier-badge" style="background: rgba(255, 82, 82, 0.15); color: #ff5252;">T4 高危避坑区</span>
+          <h3 class="h4" style="color: var(--white); margin: 6px 0;">公网直连与超低价月抛盘</h3>
+          <p class="caption muted">
+            <strong>核心特征：</strong>无专线背景，靠廉价公网 NAT 机器搭建，常年推销“30元包三年”的自杀式促销。敏感期 100% 阻断，90% 概率在 6 个月内卷款跑路。<br/>
+            <strong>应对准则：</strong>坚决杜绝碰这类劣质盘！
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top Ranked Brands Showcase -->
+    <section class="content-section">
+      <h2 class="h3 section-title">二、2026 优先推荐的 8 大高可用品牌</h2>
+      <div class="brands-showcase-grid">
+        {topTierBrands.map((b) => (
+          <div class="brand-item-card">
+            <div class="brand-head">
+              <span class="brand-rank">RANK #{b.rank}</span>
+              <strong class="body-sb" style="color: var(--white);">{b.name}</strong>
+              <span class="brand-price">{b.price}</span>
+            </div>
+            <p class="caption muted" style="margin: 8px 0 12px; line-height: 1.5;">{b.tagline}</p>
+            <div class="brand-stats">
+              <span class="caption">线路: <strong>{b.lineType}</strong></span>
+              <span class="caption">协议: <strong>{b.protocols[0]}</strong></span>
+            </div>
+            <div class="brand-actions">
+              <a href={`/brands/${b.id}`} class="btn-detail">查看评测报告</a>
+              <a href={b.affUrl} target="_blank" rel="nofollow sponsored noopener" class="btn-aff">直达开通</a>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="/brands" class="btn-view-all">查看全部 42 家机场品牌库完整清单 →</a>
+      </div>
+    </section>
+
+    <!-- Related Navigation Clusters -->
+    <section class="content-section">
+      <h2 class="h3 section-title">三、相关进阶专题</h2>
+      <div class="cluster-grid">
+        <a href="/warning" class="cluster-card">
+          <span class="cluster-pill">安全观测</span>
+          <strong class="body-sb" style="color: var(--white);">跑路预警与 10 项安全指标打分器 →</strong>
+          <p class="caption muted">自测您当前使用的机场是否有跑路风险，掌握资金止损攻略。</p>
+        </a>
+        <a href="/tutorial" class="cluster-card">
+          <span class="cluster-pill">新手上路</span>
+          <strong class="body-sb" style="color: var(--white);">全平台客户端 5 分钟极速配置指南 →</strong>
+          <p class="caption muted">Win、Mac、安卓与 iOS 小火箭订阅导入无死角教程。</p>
+        </a>
+        <a href="/free" class="cluster-card">
+          <span class="cluster-pill">开源工具</span>
+          <strong class="body-sb" style="color: var(--white);">免费代理工具与官方客户端镜像 →</strong>
+          <p class="caption muted">官方正版 Clash Verge Rev、v2rayN 防钓鱼纯净镜像下载。</p>
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+.category-page { padding-top: 24px; padding-bottom: 80px; }
+.breadcrumb-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.category-header { border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 32px; margin-bottom: 36px; }
+.category-tag-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.category-badge { background: rgba(0, 230, 118, 0.12); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); font-family: monospace; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+.category-title { color: var(--white); font-size: clamp(26px, 3.5vw, 38px); margin-bottom: 14px; }
+.category-lead { font-size: 16px; line-height: 1.7; max-width: 860px; }
+.content-section { margin-bottom: 44px; }
+.section-title { color: var(--white); font-size: 20px; margin-bottom: 18px; border-left: 3px solid #00e676; padding-left: 10px; }
+.tiers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.tier-card { background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.tier-t1 { border-color: rgba(0, 230, 118, 0.3); background: rgba(0, 230, 118, 0.03); }
+.tier-badge { align-self: flex-start; font-size: 11px; font-weight: 700; font-family: monospace; padding: 2px 8px; border-radius: 4px; background: rgba(0, 230, 118, 0.15); color: #00e676; }
+.brands-showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.brand-item-card { background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; }
+.brand-head { display: flex; justify-content: space-between; align-items: center; }
+.brand-rank { font-size: 12px; font-weight: 700; color: #00e676; font-family: monospace; }
+.brand-price { font-size: 14px; font-weight: 700; color: #00e676; }
+.brand-stats { display: flex; justify-content: space-between; border-top: 1px solid rgba(255, 255, 255, 0.04); padding-top: 10px; margin-top: auto; }
+.brand-actions { display: flex; gap: 10px; margin-top: 14px; }
+.btn-detail { flex: 1; text-align: center; padding: 8px; border-radius: 6px; background: rgba(255, 255, 255, 0.05); color: var(--white); font-size: 12px; font-weight: 600; }
+.btn-aff { flex: 1; text-align: center; padding: 8px; border-radius: 6px; background: #00e676; color: #121212; font-size: 12px; font-weight: 700; }
+.btn-view-all { display: inline-block; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); color: var(--white); padding: 12px 24px; border-radius: 20px; font-size: 14px; font-weight: 600; transition: border-color 0.16s ease; }
+.btn-view-all:hover { border-color: #00e676; color: #00e676; }
+.cluster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.cluster-card { background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.16s ease; }
+.cluster-card:hover { border-color: #00e676; }
+.cluster-pill { font-size: 11px; font-family: monospace; color: #00e676; }
+</style>

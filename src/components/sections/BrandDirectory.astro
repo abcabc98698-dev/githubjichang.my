@@ -1,0 +1,461 @@
+---
+import { BRANDS } from "../../data/brands";
+import Icon from "../Icon.astro";
+---
+<section id="brands" class="brands-section container">
+  <div class="brands-header">
+    <div class="section-tag-row">
+      <span class="mono-badge">DATABASE</span>
+      <span class="caption muted">共收录 42 家主流与独立机场品牌</span>
+    </div>
+    <h2 class="h2 brands-title">2026 全景机场品牌库与决策检索器</h2>
+    <p class="body muted balance">
+      基于 42 家品牌实测数据与官方资料建档。支持按专线架构、自研免配置客户端、不限时包及预算多维筛选。所有推广链接均标注合规声明，拒绝虚构数据。
+    </p>
+  </div>
+
+  <!-- Search & Filter Controls -->
+  <div class="controls-wrap" data-brand-controls>
+    <div class="search-box">
+      <input
+        type="search"
+        class="search-input"
+        placeholder="搜索品牌名称、协议（如 VLESS）、专线或特性..."
+        data-brand-search
+        aria-label="搜索机场品牌"
+      />
+    </div>
+
+    <div class="filter-tabs" data-filter-tabs>
+      <button type="button" class="tab-btn is-active" data-filter="all">全部 (42)</button>
+      <button type="button" class="tab-btn" data-filter="top10">主力前十 (10)</button>
+      <button type="button" class="tab-btn" data-filter="budget">≤10元超值档</button>
+      <button type="button" class="tab-btn" data-filter="iepl">IEPL/IPLC 纯专线</button>
+      <button type="button" class="tab-btn" data-filter="permanent">不限时不过期</button>
+      <button type="button" class="tab-btn" data-filter="customClient">专属客户端 (免配置)</button>
+      <button type="button" class="tab-btn" data-filter="archive">历史备用仓 (14)</button>
+    </div>
+  </div>
+
+  <!-- Brands Grid (42 Cards) -->
+  <div class="brands-grid" data-brands-grid>
+    {BRANDS.map((b) => (
+      <article
+        class="brand-card"
+        data-brand-card
+        data-name={b.name.toLowerCase()}
+        data-rank={b.rank}
+        data-price={b.minPriceNum}
+        data-line={b.lineType.toLowerCase()}
+        data-protocol={b.protocols.join(" ").toLowerCase()}
+        data-client={b.clientType}
+        data-has-permanent={b.plans.some((p) => p.name.includes("不限时") || p.name.includes("永久")) ? "true" : "false"}
+        data-category={b.category}
+        data-tags={`${b.name} ${b.slug} ${b.tagline} ${b.lineType} ${b.protocols.join(" ")} ${b.features?.join(" ") || ""}`.toLowerCase()}
+      >
+        <div class="card-top">
+          <div class="brand-rank-group">
+            <span class:list={["rank-badge", { "is-top3": b.rank <= 3, "is-top10": b.rank > 3 && b.rank <= 10 }]}>
+              #{b.rank}
+            </span>
+            <div class="brand-title-col">
+              <h3 class="brand-name body-sb">{b.name}</h3>
+              <span class="brand-est caption muted">{b.established} · {b.protocols.join(" / ")}</span>
+            </div>
+          </div>
+
+          <div class="status-pill-group">
+            {b.dataStatus === "measured" && <span class="tag-status measured">晚高峰实测</span>}
+            {b.dataStatus === "vendor" && <span class="tag-status vendor">品牌方资料</span>}
+            {b.dataStatus === "historical" && <span class="tag-status history">历史档案</span>}
+          </div>
+        </div>
+
+        <p class="brand-tagline caption muted">{b.tagline}</p>
+
+        <div class="brand-specs-row">
+          <div class="spec-col">
+            <span class="caption-xs muted">起步门槛</span>
+            <strong class="spec-val" style="color: #00e676;">{b.price}</strong>
+          </div>
+          <div class="spec-col">
+            <span class="caption-xs muted">实测延迟</span>
+            <strong class="spec-val">{b.ping}</strong>
+          </div>
+          <div class="spec-col">
+            <span class="caption-xs muted">峰值下载</span>
+            <strong class="spec-val">{b.speed}</strong>
+          </div>
+        </div>
+
+        <div class="brand-features-list caption muted">
+          <div class="feature-item">
+            <span class="feat-bullet">线路:</span> {b.lineType}
+          </div>
+          <div class="feature-item">
+            <span class="feat-bullet">客户端:</span> {b.clientSupport}
+          </div>
+        </div>
+
+        {b.coupon && (
+          <div class="brand-coupon-bar">
+            <span class="caption-xs muted">优惠码:</span>
+            <code class="coupon-code">{b.coupon}</code>
+          </div>
+        )}
+
+        <div class="card-footer-btns">
+          <a class="card-btn-detail caption" href={`/brands/${b.id}`}>
+            查看深度评测
+          </a>
+          <a
+            class="card-btn-cta caption"
+            href={b.affUrl}
+            target="_blank"
+            rel="nofollow sponsored noopener"
+          >
+            <span>直达官网</span>
+            <Icon name="arrow-up-right" size={14} />
+          </a>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" data-empty-state style="display: none;">
+    <p class="body muted">未找到匹配的机场品牌，请尝试更换关键词或筛选标签。</p>
+  </div>
+</section>
+
+<script>
+  // Client-side filtering and real-time instant search
+  const root = document.querySelector<HTMLElement>("[data-brand-controls]");
+  const grid = document.querySelector<HTMLElement>("[data-brands-grid]");
+  const empty = document.querySelector<HTMLElement>("[data-empty-state]");
+  
+  if (root && grid) {
+    const searchInput = root.querySelector<HTMLInputElement>("[data-brand-search]");
+    const tabBtns = root.querySelectorAll<HTMLButtonElement>("[data-filter]");
+    const cards = grid.querySelectorAll<HTMLElement>("[data-brand-card]");
+
+    let activeFilter = "all";
+    let searchQuery = "";
+
+    const applyFilter = () => {
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const rank = parseInt(card.dataset.rank || "999");
+        const price = parseFloat(card.dataset.price || "999");
+        const line = card.dataset.line || "";
+        const client = card.dataset.client || "";
+        const hasPermanent = card.dataset.hasPermanent === "true";
+        const category = card.dataset.category || "";
+        const tags = card.dataset.tags || "";
+
+        let matchesTab = true;
+        if (activeFilter === "top10") matchesTab = rank <= 10;
+        else if (activeFilter === "budget") matchesTab = price <= 10;
+        else if (activeFilter === "iepl") matchesTab = line.includes("iepl") || line.includes("iplc") || line.includes("专线");
+        else if (activeFilter === "permanent") matchesTab = hasPermanent;
+        else if (activeFilter === "customClient") matchesTab = client === "custom" || client === "both";
+        else if (activeFilter === "archive") matchesTab = category === "archive";
+
+        let matchesSearch = true;
+        if (searchQuery.trim()) {
+          matchesSearch = tags.includes(searchQuery.trim().toLowerCase());
+        }
+
+        if (matchesTab && matchesSearch) {
+          card.style.display = "";
+          visibleCount++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      if (empty) {
+        empty.style.display = visibleCount === 0 ? "block" : "none";
+      }
+    };
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        tabBtns.forEach((b) => b.classList.remove("is-active"));
+        btn.classList.add("is-active");
+        activeFilter = btn.dataset.filter || "all";
+        applyFilter();
+      });
+    });
+
+    searchInput?.addEventListener("input", (e) => {
+      searchQuery = (e.target as HTMLInputElement).value;
+      applyFilter();
+    });
+  }
+</script>
+
+<style>
+.brands-section {
+  padding: 80px 20px;
+}
+.brands-header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 40px;
+}
+.section-tag-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.mono-badge {
+  font-family: monospace;
+  font-size: 11px;
+  color: #00e676;
+  background: rgba(0, 230, 118, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.brands-title {
+  color: var(--white);
+  font-size: clamp(26px, 3.5vw, 38px);
+  margin-bottom: 16px;
+}
+
+/* Controls */
+.controls-wrap {
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.search-box {
+  width: 100%;
+}
+.search-input {
+  width: 100%;
+  height: 50px;
+  padding: 0 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.search-input:focus {
+  border-color: #00e676;
+  background: rgba(0, 230, 118, 0.03);
+}
+
+/* Filter Tabs */
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tab-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--grey);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+}
+.tab-btn.is-active {
+  background: #00e676;
+  color: #121212;
+  font-weight: 700;
+  border-color: #00e676;
+}
+
+/* Grid */
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+.brand-card {
+  background: #0d121c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.brand-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 230, 118, 0.4);
+}
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.brand-rank-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.rank-badge {
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.rank-badge.is-top3 {
+  background: #00e676;
+  color: #121212;
+}
+.rank-badge.is-top10 {
+  background: rgba(0, 230, 118, 0.2);
+  color: #00e676;
+}
+.brand-title-col {
+  display: flex;
+  flex-direction: column;
+}
+.brand-name {
+  color: var(--white);
+  font-size: 17px;
+}
+.brand-est {
+  font-size: 11px;
+}
+.status-pill-group {
+  display: flex;
+  gap: 4px;
+}
+.tag-status {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.tag-status.measured {
+  background: rgba(0, 230, 118, 0.15);
+  color: #00e676;
+}
+.tag-status.vendor {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+.tag-status.history {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white-60);
+}
+.brand-tagline {
+  min-height: 38px;
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+
+/* Specs Row */
+.brand-specs-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  margin-bottom: 14px;
+}
+.spec-col {
+  display: flex;
+  flex-direction: column;
+}
+.caption-xs {
+  font-size: 10px;
+}
+.spec-val {
+  font-size: 13px;
+  font-family: monospace;
+  color: var(--white);
+}
+
+/* Features List */
+.brand-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+.feat-bullet {
+  color: var(--white-40);
+}
+
+/* Coupon Bar */
+.brand-coupon-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 6px 10px;
+  background: rgba(0, 230, 118, 0.05);
+  border-radius: 6px;
+}
+.coupon-code {
+  font-family: monospace;
+  font-weight: 700;
+  color: #00e676;
+  font-size: 13px;
+}
+
+/* Footer Btns */
+.card-footer-btns {
+  margin-top: auto;
+  display: flex;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.card-btn-detail {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--white);
+  transition: background 0.16s ease;
+}
+.card-btn-detail:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.card-btn-cta {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #00e676;
+  color: #121212;
+  font-weight: 700;
+  transition: transform 0.14s ease, opacity 0.14s ease;
+}
+.card-btn-cta:hover {
+  opacity: 0.92;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+</style>

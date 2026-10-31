@@ -1,0 +1,191 @@
+---
+import Base from "../layouts/Base.astro";
+import Topbar from "../components/Topbar.astro";
+import Footer from "../components/sections/Footer.astro";
+import Icon from "../components/Icon.astro";
+import { BRANDS } from "../data/brands";
+
+const vpnJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "VPN 与现代专线网络选型指南 · 传统 VPN 与机场代理底层区别全景对比",
+    "description": "深入解析传统商用 VPN（WireGuard / OpenVPN）与现代跨境专线机场（IEPL / IPLC / VLESS）在加密机制、抗封锁、网络延迟与晚高峰吞吐上的本质区别。",
+    "url": "https://githubjichang.my/vpn",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://githubjichang.my" },
+        { "@type": "ListItem", "position": 2, "name": "VPN 选型与对比", "item": "https://githubjichang.my/vpn" }
+      ]
+    }
+  }
+];
+
+const topVpnAlternatives = BRANDS.slice(0, 6);
+---
+<Base
+  title="VPN与专线机场有什么区别？2026 跨境网络加速选型与协议对比 | github机场"
+  description="传统商用 VPN 频频被阻断？深度对比 WireGuard、OpenVPN 与现代 IEPL/IPLC 专线机场的底层抗封锁机制、晚高峰延迟与流媒体解锁能力，助您做出科学的网络选型决策。"
+  keywords={["VPN推荐", "VPN与机场区别", "WireGuard", "OpenVPN", "IEPL专线", "科学上网选型", "github机场"]}
+  jsonLd={vpnJsonLd}
+>
+  <Topbar path="/vpn" />
+  <main class="category-page container">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-bar" aria-label="Breadcrumb">
+      <a href="/" class="caption muted">首页</a>
+      <span class="caption muted">/</span>
+      <span class="caption" style="color: var(--white);">VPN 选型与深度解析</span>
+    </nav>
+
+    <!-- Header -->
+    <header class="category-header">
+      <div class="category-tag-row">
+        <span class="category-badge">NETWORK ARCHITECTURE</span>
+        <span class="caption muted">传统加密 VPN vs 现代应用层专线代理 · 架构全景解析</span>
+      </div>
+      <h1 class="h1 category-title">VPN 选型指南与专线加速底层技术解析</h1>
+      <p class="body muted balance category-lead">
+        很多出海新手常问：“为什么大名鼎鼎的国际商业 VPN（如 ExpressVPN、NordVPN）在境内频繁断流，而 IEPL 专线却能稳定秒开 4K？” 答案在于两者解决的是完全不同的网络问题：传统 VPN 设计用于企业内网数据保密，而现代专线机场则针对 GFW 防火长城的特征检测与公网拥塞进行了重度抗审查优化。
+      </p>
+    </header>
+
+    <!-- Comparison Table -->
+    <section class="content-section">
+      <h2 class="h3 section-title">一、传统商业 VPN vs 现代专线机场深度技术横评</h2>
+      <div class="table-container">
+        <table class="spec-table">
+          <thead>
+            <tr>
+              <th>对比维度</th>
+              <th>传统商业 VPN (如 Nord/Express)</th>
+              <th>现代专线机场 (如光速云/IEPL)</th>
+              <th>选型建议</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>设计初衷</strong></td>
+              <td>企业端到端强加密、防窃听</td>
+              <td>跨境网络加速、绕开公网审查限速</td>
+              <td>办公传输选 VPN，日常追剧与 AI 选专线</td>
+            </tr>
+            <tr>
+              <td><strong>底层协议</strong></td>
+              <td>OpenVPN, WireGuard, IKEv2</td>
+              <td>Shadowsocks 2022, VLESS Reality, Trojan</td>
+              <td>专线协议具备主动抗嗅探伪装能力</td>
+            </tr>
+            <tr>
+              <td><strong>抗审查能力</strong></td>
+              <td>较弱，握手特征极其明显，易遭端口阻断</td>
+              <td>极高，内网物理光纤传输，不过 GFW 过滤</td>
+              <td>国内环境专线稳定度远超传统 VPN</td>
+            </tr>
+            <tr>
+              <td><strong>晚高峰延迟</strong></td>
+              <td>高（走公网海缆，晚高峰 200ms-400ms）</td>
+              <td>极低（BGP入口 + 内网光纤，中港 20-35ms）</td>
+              <td>对交互延迟敏感的场景专线体验压倒性胜出</td>
+            </tr>
+            <tr>
+              <td><strong>分流能力</strong></td>
+              <td>全局代理，访问微信、网银变慢</td>
+              <td>智能分流（国内直连，国外走代理）</td>
+              <td>机场生态拥有成熟的规则集（ACL4SSR）</td>
+            </tr>
+            <tr>
+              <td><strong>月均成本</strong></td>
+              <td>¥40 - ¥80 / 月（多要求数年大额预付）</td>
+              <td>¥8 - ¥25 / 月（支持小额月付试水）</td>
+              <td>专线机场资金试错门槛极低</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Cluster Sub-links -->
+    <section class="content-section">
+      <h2 class="h3 section-title">二、相关核心专题与深入探讨</h2>
+      <div class="cluster-grid">
+        <a href="/jichang" class="cluster-card">
+          <span class="cluster-pill">专题 01</span>
+          <strong class="body-sb" style="color: var(--white);">2026 机场推荐与选购指南 →</strong>
+          <p class="caption muted">42 家精选专线机场天梯榜，横向对比价格、延迟与真实带宽。</p>
+        </a>
+        <a href="/clash" class="cluster-card">
+          <span class="cluster-pill">专题 02</span>
+          <strong class="body-sb" style="color: var(--white);">Clash 客户端与分流规则大全 →</strong>
+          <p class="caption muted">告别全局卡顿，学会配置规则模式实现国内直连、海外智能加速。</p>
+        </a>
+        <a href="/nodes" class="cluster-card">
+          <span class="cluster-pill">专题 03</span>
+          <strong class="body-sb" style="color: var(--white);">全球节点与原生 IP 选型 →</strong>
+          <p class="caption muted">解析香港、日本、美国节点在 ChatGPT、Netflix 平台的风控表现。</p>
+        </a>
+        <a href="/faq-master" class="cluster-card">
+          <span class="cluster-pill">专题 04</span>
+          <strong class="body-sb" style="color: var(--white);">技术百科与 100% 报错排查 →</strong>
+          <p class="caption muted">TUN 网卡失效、握手失败、DNS 泄漏终极解决方案字典。</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Recommended Alternatives -->
+    <section class="content-section">
+      <h2 class="h3 section-title">三、经过网络观测台审计的稳定专线代表</h2>
+      <div class="brands-showcase-grid">
+        {topVpnAlternatives.map((b) => (
+          <div class="brand-item-card">
+            <div class="brand-head">
+              <span class="brand-rank">#{b.rank}</span>
+              <strong class="body-sb" style="color: var(--white);">{b.name}</strong>
+              <span class="brand-price">{b.price}</span>
+            </div>
+            <p class="caption muted" style="margin: 8px 0 12px; line-height: 1.5;">{b.tagline}</p>
+            <div class="brand-stats">
+              <span class="caption">延迟: <strong>{b.ping}</strong></span>
+              <span class="caption">线路: <strong>{b.lineType}</strong></span>
+            </div>
+            <div class="brand-actions">
+              <a href={`/brands/${b.id}`} class="btn-detail">查看评测报告</a>
+              <a href={b.affUrl} target="_blank" rel="nofollow sponsored noopener" class="btn-aff">直达官网</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+.category-page { padding-top: 24px; padding-bottom: 80px; }
+.breadcrumb-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.category-header { border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 32px; margin-bottom: 36px; }
+.category-tag-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.category-badge { background: rgba(0, 230, 118, 0.12); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); font-family: monospace; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+.category-title { color: var(--white); font-size: clamp(26px, 3.5vw, 38px); margin-bottom: 14px; }
+.category-lead { font-size: 16px; line-height: 1.7; max-width: 860px; }
+.content-section { margin-bottom: 44px; }
+.section-title { color: var(--white); font-size: 20px; margin-bottom: 18px; border-left: 3px solid #00e676; padding-left: 10px; }
+.table-container { overflow-x: auto; background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; }
+.spec-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; }
+.spec-table th { background: rgba(255, 255, 255, 0.04); padding: 14px 16px; color: var(--white); font-weight: 600; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.spec-table td { padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); color: rgba(255, 255, 255, 0.8); }
+.cluster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.cluster-card { background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.16s ease; }
+.cluster-card:hover { border-color: #00e676; }
+.cluster-pill { font-size: 11px; font-family: monospace; color: #00e676; }
+.brands-showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.brand-item-card { background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; }
+.brand-head { display: flex; justify-content: space-between; align-items: center; }
+.brand-rank { font-size: 12px; font-weight: 700; color: #00e676; font-family: monospace; }
+.brand-price { font-size: 14px; font-weight: 700; color: #00e676; }
+.brand-stats { display: flex; justify-content: space-between; border-top: 1px solid rgba(255, 255, 255, 0.04); padding-top: 10px; margin-top: auto; }
+.brand-actions { display: flex; gap: 10px; margin-top: 14px; }
+.btn-detail { flex: 1; text-align: center; padding: 8px; border-radius: 6px; background: rgba(255, 255, 255, 0.05); color: var(--white); font-size: 12px; font-weight: 600; }
+.btn-aff { flex: 1; text-align: center; padding: 8px; border-radius: 6px; background: #00e676; color: #121212; font-size: 12px; font-weight: 700; }
+</style>

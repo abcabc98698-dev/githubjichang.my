@@ -1,0 +1,293 @@
+---
+import { BRANDS } from "../../data/brands";
+import Icon from "../Icon.astro";
+
+const gsy = BRANDS.find((b) => b.id === "guangsuyun") || BRANDS[0];
+---
+<section id="flagship" class="flagship-section container">
+  <div class="flagship-glow"></div>
+  
+  <div class="flagship-header">
+    <div class="flagship-badge-row">
+      <span class="flagship-pill-primary">★ #1 年度主推旗舰</span>
+      <span class="flagship-pill-tag">2020年老牌运营</span>
+      <span class="flagship-pill-tag">IEPL 专线直连</span>
+      <span class="flagship-pill-tag">VLESS 协议</span>
+    </div>
+    
+    <h2 class="h2 flagship-title">
+      光速云 · 企业级专线网络与全场景出海加速
+    </h2>
+    
+    <p class="body balance flagship-desc">
+      自 2020 年起稳定运营，拒绝低价跑路套路。采用全球 IEPL 专线与企业级内网双专线架构，单节点最高 2.5Gbps 带宽。独家推出<b>致敬斯诺克 147 永久套餐</b>（一次性付费不过期）与<b>轻量版年付 99 元</b>（折合约 8 元/月）。提供自研免配置客户端与开源客户端通用订阅双轨支持。
+    </p>
+  </div>
+
+  <!-- Plans Grid -->
+  <div class="flagship-plans-grid">
+    {gsy.plans.map((p, idx) => (
+      <div class:list={["flagship-plan-card", { "is-featured": idx === 0 || idx === 1 }]}>
+        {idx === 0 && <div class="plan-tag-top">独家永久版 · 终身有效</div>}
+        {idx === 1 && <div class="plan-tag-top">入门性价比爆款</div>}
+        <div class="plan-head">
+          <h3 class="body-sb" style="color: var(--white); font-size: 17px;">{p.name}</h3>
+          <span class="plan-billing caption muted">{p.billing}</span>
+        </div>
+        <div class="plan-price-wrap">
+          <span class="plan-price-val">{p.price}</span>
+        </div>
+        <div class="plan-traffic-row">
+          <span class="plan-traffic-label caption muted">包含流量</span>
+          <span class="plan-traffic-num body-sb" style="color: #00e676;">{p.traffic}</span>
+        </div>
+        <p class="plan-note caption muted">{p.note}</p>
+        <div class="plan-divider"></div>
+        <ul class="plan-features caption">
+          <li>✔ 全节点 ×1 倍率无虚标</li>
+          <li>✔ 单节点最高 2.5Gbps 带宽</li>
+          <li>✔ 不限多设备同时在线</li>
+          <li>✔ 支持自研客户端 + Clash / 小火箭</li>
+        </ul>
+      </div>
+    ))}
+  </div>
+
+  <!-- Key Specs & Telemetry -->
+  <div class="flagship-meta-box">
+    <div class="flagship-meta-col">
+      <span class="caption muted">专属优惠码</span>
+      <div class="flagship-coupon-badge">
+        <code class="body-sb">{gsy.coupon}</code>
+        <span class="coupon-tip">新人全场立减</span>
+      </div>
+    </div>
+    <div class="flagship-meta-col">
+      <span class="caption muted">晚高峰实测基准</span>
+      <p class="body-sb" style="color: var(--white);">香港 22ms (529Mbps) · 日本 57ms (135Mbps)</p>
+    </div>
+    <div class="flagship-meta-col">
+      <span class="caption muted">AI & 流媒体解锁</span>
+      <p class="body-sb" style="color: var(--white);">原生 IP 解锁 ChatGPT · Claude · Netflix 4K · TikTok</p>
+    </div>
+    <div class="flagship-cta-col">
+      <a
+        class="flagship-btn-primary"
+        href={gsy.affUrl}
+        target="_blank"
+        rel="nofollow sponsored noopener"
+      >
+        <span>直达光速云官网开通</span>
+        <Icon name="arrow-up-right" size={18} stroke={2} />
+      </a>
+    </div>
+  </div>
+
+  <p class="caption muted balance" style="text-align: center; margin-top: 16px;">
+    * 含推广链接，通过链接注册可能为本站带来服务器探针维护佣金，不影响您的实际支付价格。特殊特惠套餐不支持退款，建议按需选购。
+  </p>
+</section>
+
+<style>
+.flagship-section {
+  position: relative;
+  padding: 80px 20px;
+  margin-top: 40px;
+  border-radius: 20px;
+  background: radial-gradient(circle at 50% 0%, rgba(0, 230, 118, 0.08) 0%, rgba(18, 18, 18, 0.98) 70%);
+  border: 1px solid rgba(0, 230, 118, 0.25);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 230, 118, 0.05);
+  overflow: hidden;
+}
+.flagship-header {
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto 48px;
+}
+.flagship-badge-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.flagship-pill-primary {
+  display: inline-flex;
+  padding: 4px 14px;
+  border-radius: 20px;
+  background: #00e676;
+  color: #121212;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.flagship-pill-tag {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--white);
+  font-size: 12px;
+}
+.flagship-title {
+  color: var(--white);
+  font-size: clamp(28px, 4vw, 42px);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.flagship-desc {
+  color: var(--grey);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* Plans Grid */
+.flagship-plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.flagship-plan-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.flagship-plan-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 230, 118, 0.4);
+}
+.flagship-plan-card.is-featured {
+  background: rgba(0, 230, 118, 0.04);
+  border: 1px solid rgba(0, 230, 118, 0.35);
+}
+.plan-tag-top {
+  position: absolute;
+  top: -10px;
+  right: 16px;
+  background: #00e676;
+  color: #121212;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+.plan-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+.plan-price-wrap {
+  margin-bottom: 8px;
+}
+.plan-price-val {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.02em;
+}
+.plan-traffic-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+.plan-note {
+  min-height: 36px;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+.plan-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 12px;
+}
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--grey);
+}
+
+/* Meta Box */
+.flagship-meta-box {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 20px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.flagship-meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.flagship-coupon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.flagship-coupon-badge code {
+  background: rgba(0, 230, 118, 0.15);
+  color: #00e676;
+  border: 1px solid rgba(0, 230, 118, 0.4);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 700;
+}
+.coupon-tip {
+  font-size: 12px;
+  color: var(--grey);
+}
+.flagship-cta-col {
+  margin-left: auto;
+}
+.flagship-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #00e676;
+  color: #121212;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 30px;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+  box-shadow: 0 4px 20px rgba(0, 230, 118, 0.3);
+}
+.flagship-btn-primary:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 26px rgba(0, 230, 118, 0.45);
+}
+
+@media (max-width: 809px) {
+  .flagship-meta-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .flagship-cta-col {
+    margin-left: 0;
+    width: 100%;
+  }
+  .flagship-btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+</style>

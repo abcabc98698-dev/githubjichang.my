@@ -1,24 +1,27 @@
 ---
-import { site } from "../../lib/site";
+import { FAQS } from "../../data/faqs";
 import ScrollWords from "../ScrollWords.astro";
 import Icon from "../Icon.astro";
 ---
-<section class="faq container">
+<section id="faq" class="faq container">
   <div class="faq-card">
     <div class="faq-left">
-      <ScrollWords as="h2" class="h2 balance" text="Frequently asked questions" />
+      <ScrollWords as="h2" class="h2 balance" text="避坑指南 & 专线选购核心问答" />
+      <p class="body muted balance" style="margin-top: 16px;">
+        基于网络工程师实操经验，深度解析专线防封原理、AI 解锁风控逻辑与客户端常见报错。
+      </p>
     </div>
     <div class="faq-rows" data-faq>
-      {site.faq.map((it, i) => (
+      {FAQS.map((it, i) => (
         <>
           {i > 0 && <div class="divider" aria-hidden="true"></div>}
           <button type="button" class="faq-item" aria-expanded="false">
             <div class="faq-head">
-              <h4 class="h4 balance faq-question">{it.q}</h4>
+              <h4 class="h4 balance faq-question" style="font-size: 17px;">{it.q}</h4>
               <span class="faq-toggle"><Icon name="plus" size={22} stroke={1.5} /></span>
             </div>
             <div class="faq-answer-wrap" aria-hidden="true">
-              <p class="body balance faq-answer">{it.a}</p>
+              <p class="body balance faq-answer" style="line-height: 1.7; color: var(--grey);">{it.a}</p>
             </div>
           </button>
         </>

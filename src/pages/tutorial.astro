@@ -1,0 +1,178 @@
+---
+import Base from "../layouts/Base.astro";
+import Topbar from "../components/Topbar.astro";
+import Footer from "../components/sections/Footer.astro";
+import Icon from "../components/Icon.astro";
+import { CLIENTS } from "../data/clients";
+
+const tutorialJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "跨境网络与代理客户端极速上手教程 · 2026 全平台配置指南",
+    "description": "5 分钟玩转科学上网。详细图文指南涵盖 Windows (Clash Verge Rev)、macOS、Android 与 iOS (Shadowrocket 小火箭) 订阅链接导入、Rule 智能分流与免配置自研客户端使用技巧。",
+    "url": "https://githubjichang.my/tutorial",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://githubjichang.my" },
+        { "@type": "ListItem", "position": 2, "name": "使用教程", "item": "https://githubjichang.my/tutorial" }
+      ]
+    }
+  }
+];
+---
+<Base
+  title="科学上网新手教程 · 2026 全平台客户端配置与订阅导入指南 | github机场"
+  description="小白也能学会的科学上网教程！详细讲解 Windows、Mac、安卓与 iPhone (Shadowrocket) 如何获取订阅、一键导入客户端、开启 Rule 智能分流与排查常见联网错误。"
+  keywords={["科学上网教程", "Clash使用教程", "Shadowrocket教程", "小火箭配置", "机场订阅导入", "github机场"]}
+  jsonLd={tutorialJsonLd}
+>
+  <Topbar path="/tutorial" />
+  <main class="category-page container">
+    <nav class="breadcrumb-bar" aria-label="Breadcrumb">
+      <a href="/" class="caption muted">首页</a>
+      <span class="caption muted">/</span>
+      <span class="caption" style="color: var(--white);">使用教程</span>
+    </nav>
+
+    <header class="category-header">
+      <div class="category-tag-row">
+        <span class="category-badge">STEP-BY-STEP GUIDES</span>
+        <span class="caption muted">全平台 5 分钟配置极速指南 · 双轨上手模式</span>
+      </div>
+      <h1 class="h1 category-title">全平台客户端配置与订阅导入教程</h1>
+      <p class="body muted balance category-lead">
+        无论您使用的是 Windows 笔记本、MacBook、安卓旗舰还是 iPhone，本教程将以最直观的步骤带您完成从注册开通、下载官方纯净客户端，到导入订阅并开启智能分流的全过程。
+      </p>
+    </header>
+
+    <!-- Two Paths Comparison -->
+    <section class="content-section">
+      <h2 class="h3 section-title">一、选择适合您的上手路线</h2>
+      <div class="paths-grid">
+        <div class="path-card">
+          <span class="path-badge">路线 A · 小白首选</span>
+          <h3 class="h4" style="color: var(--white); margin: 6px 0;">官方专属免配置客户端 (1分钟搞定)</h3>
+          <p class="caption muted">
+            <strong>适合人群：</strong>对技术术语不感冒、嫌转换订阅麻烦的新手。<br/>
+            <strong>操作流程：</strong>在支持专属 App 的服务商（如光速云、飞猫云）后台下载对应系统安装包，安装后输入账号密码登录，点击“一键连接”即可自动完成分流与节点优选。
+          </p>
+        </div>
+
+        <div class="path-card">
+          <span class="path-badge" style="background: rgba(0, 229, 255, 0.15); color: #00e5ff;">路线 B · 进阶极客</span>
+          <h3 class="h4" style="color: var(--white); margin: 6px 0;">开源通用客户端 + 订阅导入 (自由可控)</h3>
+          <p class="caption muted">
+            <strong>适合人群：</strong>需要精细化配置 ACL4SSR 分流规则、开启 TUN 虚拟网卡代理终端或游戏进程的开发者。<br/>
+            <strong>操作流程：</strong>下载开源客户端（Clash Verge Rev、Shadowrocket），复制机场后台的 Subscription 订阅链接导入并更新。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OS Detailed Guides -->
+    <section class="content-section">
+      <h2 class="h3 section-title">二、各操作系统标准化三步配置指南</h2>
+      <div class="os-guides-list">
+        <!-- Windows -->
+        <div class="os-guide-item">
+          <div class="os-guide-head">
+            <strong class="body-sb" style="color: var(--white);">🪟 Windows 10 / 11 极速上手</strong>
+            <span class="caption font-mono" style="color: #00e676;">推荐软件：Clash Verge Rev</span>
+          </div>
+          <ol class="steps-ol caption">
+            <li>在【免费资源】页面下载 Clash Verge Rev 官方 Release 纯净版并安装；</li>
+            <li>打开软件，点击左侧【订阅】（Profiles） ➔ 顶部粘贴机场订阅链接 ➔ 点击【保存】；</li>
+            <li>返回【代理】（Proxies）页面选择低延迟节点（如香港），在右下角系统托盘开启【系统代理】（System Proxy）即可。</li>
+          </ol>
+        </div>
+
+        <!-- macOS -->
+        <div class="os-guide-item">
+          <div class="os-guide-head">
+            <strong class="body-sb" style="color: var(--white);">🍎 macOS (Intel / Apple Silicon) 极速上手</strong>
+            <span class="caption font-mono" style="color: #00e676;">推荐软件：Clash Verge Rev / Surge</span>
+          </div>
+          <ol class="steps-ol caption">
+            <li>下载适配您 Mac 芯片的 .dmg 安装包（M 系列选择 arm64，老款选 x64），拖拽至“应用程序”；</li>
+            <li>首次打开时若提示“未受信任的开发者”，前往“系统设置 ➔ 隐私与安全性”点击“仍要打开”；</li>
+            <li>导入订阅链接后，开启“系统代理”并在模式中保持为“规则模式（Rule）”。</li>
+          </ol>
+        </div>
+
+        <!-- Android -->
+        <div class="os-guide-item">
+          <div class="os-guide-head">
+            <strong class="body-sb" style="color: var(--white);">🤖 Android 安卓手机极速上手</strong>
+            <span class="caption font-mono" style="color: #00e676;">推荐软件：Clash Meta for Android (CMFA) / v2rayNG</span>
+          </div>
+          <ol class="steps-ol caption">
+            <li>安装官方 APK 安装包，打开软件点击【配置】 ➔ 【新配置】 ➔ 【URL】；</li>
+            <li>在 URL 输入框粘贴订阅链接，自动更新完成后点击右上角勾选保存；</li>
+            <li>返回主界面点击大大的【已停止】按钮，允许系统创建 VPN 隧道连接即可。</li>
+          </ol>
+        </div>
+
+        <!-- iOS -->
+        <div class="os-guide-item">
+          <div class="os-guide-head">
+            <strong class="body-sb" style="color: var(--white);">📱 iOS / iPadOS 苹果手机极速上手</strong>
+            <span class="caption font-mono" style="color: #00e676;">推荐软件：Shadowrocket (小火箭)</span>
+          </div>
+          <ol class="steps-ol caption">
+            <li>在美区 / 港区 App Store 登录外区 Apple ID 并下载 Shadowrocket（小火箭）；</li>
+            <li>打开 App，点击右上角【+】号，类型选择【Subscribe】，在 URL 栏粘贴机场订阅并保存；</li>
+            <li>向下滑动刷新节点列表，点击开关连接，首次连接点击【Allow】允许安装系统 VPN 描述文件。</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Links -->
+    <section class="content-section">
+      <h2 class="h3 section-title">三、相关进阶教程与排障</h2>
+      <div class="cluster-grid">
+        <a href="/faq-master" class="cluster-card">
+          <span class="cluster-pill">技术百科</span>
+          <strong class="body-sb" style="color: var(--white);">技术百科与 100% 常见报错排障 →</strong>
+          <p class="caption muted">深入排查时钟不同步、TUN 模式失效与端口占用冲突。</p>
+        </a>
+        <a href="/clash" class="cluster-card">
+          <span class="cluster-pill">核心原理</span>
+          <strong class="body-sb" style="color: var(--white);">Clash Verge 与分流规则进阶 →</strong>
+          <p class="caption muted">掌握 Fake-IP、TUN 与多策略组分流进阶玩法。</p>
+        </a>
+        <a href="/free" class="cluster-card">
+          <span class="cluster-pill">软件镜像</span>
+          <strong class="body-sb" style="color: var(--white);">官方开源客户端安全下载镜像 →</strong>
+          <p class="caption muted">杜绝百度搜索流氓推广，获取纯净官方 Release 镜像。</p>
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+.category-page { padding-top: 24px; padding-bottom: 80px; }
+.breadcrumb-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.category-header { border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 32px; margin-bottom: 36px; }
+.category-tag-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.category-badge { background: rgba(0, 230, 118, 0.12); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); font-family: monospace; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+.category-title { color: var(--white); font-size: clamp(26px, 3.5vw, 38px); margin-bottom: 14px; }
+.category-lead { font-size: 16px; line-height: 1.7; max-width: 860px; }
+.content-section { margin-bottom: 44px; }
+.section-title { color: var(--white); font-size: 20px; margin-bottom: 18px; border-left: 3px solid #00e676; padding-left: 10px; }
+.paths-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.path-card { background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 8px; }
+.path-badge { align-self: flex-start; font-size: 11px; font-weight: 700; font-family: monospace; padding: 2px 8px; border-radius: 4px; background: rgba(0, 230, 118, 0.15); color: #00e676; }
+.os-guides-list { display: flex; flex-direction: column; gap: 16px; }
+.os-guide-item { background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.os-guide-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); padding-bottom: 10px; }
+.steps-ol { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); }
+.cluster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.cluster-card { background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.16s ease; }
+.cluster-card:hover { border-color: #00e676; }
+.cluster-pill { font-size: 11px; font-family: monospace; color: #00e676; }
+</style>

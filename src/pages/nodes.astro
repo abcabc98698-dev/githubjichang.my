@@ -1,0 +1,166 @@
+---
+import Base from "../layouts/Base.astro";
+import Topbar from "../components/Topbar.astro";
+import Footer from "../components/sections/Footer.astro";
+import Icon from "../components/Icon.astro";
+
+const nodesJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "全球节点分布与拓扑选型指南 · 香港/日本/新加坡/美国原生住宅节点对比",
+    "description": "深入解析香港低延迟、日本动漫流媒体、新加坡 AI 原生及美国全内容解锁节点的优劣势，详解 BGP 边界多线入口如何根据电信、联通、移动宽带自动优化选路。",
+    "url": "https://githubjichang.my/nodes",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://githubjichang.my" },
+        { "@type": "ListItem", "position": 2, "name": "全球节点选型", "item": "https://githubjichang.my/nodes" }
+      ]
+    }
+  }
+];
+---
+<Base
+  title="机场节点怎么选？香港/日本/新加坡/美国节点优劣势与原生IP解析 | github机场"
+  description="香港节点最快？新加坡最稳？美国节点看片最全？深度评测全球主流区域节点的延迟抖动、BGP 入口选路原理、ChatGPT/Claude 原生 IP 风控规避与流媒体锁区破解全指南。"
+  keywords={["机场节点选择", "香港节点延迟", "日本原生节点", "新加坡节点", "美国住宅IP", "BGP中转", "github机场"]}
+  jsonLd={nodesJsonLd}
+>
+  <Topbar path="/nodes" />
+  <main class="category-page container">
+    <nav class="breadcrumb-bar" aria-label="Breadcrumb">
+      <a href="/" class="caption muted">首页</a>
+      <span class="caption muted">/</span>
+      <span class="caption" style="color: var(--white);">全球节点与网络拓扑</span>
+    </nav>
+
+    <header class="category-header">
+      <div class="category-tag-row">
+        <span class="category-badge">NETWORK TOPOLOGY & POPs</span>
+        <span class="caption muted">全球骨干节点与 BGP 入口调度 · 区域特性与原生 IP 矩阵</span>
+      </div>
+      <h1 class="h1 category-title">全球节点选型指南与 BGP 智能路由原理解析</h1>
+      <p class="body muted balance category-lead">
+        打开客户端，面对列表中的几十个国家和几百个节点，究竟该选哪一个？不同的节点位置不仅意味着 30ms 与 180ms 的物理延迟差距，更决定了能否看全 Netflix 4K 版权剧、能否绕过 OpenAI 的 1020 风控拦截。本专栏教您针对不同应用场景进行科学节点分流。
+      </p>
+    </header>
+
+    <!-- Node Regions Grid -->
+    <section class="content-section">
+      <h2 class="h3 section-title">一、主流区域节点特性与适用场景全景对比</h2>
+      <div class="regions-grid">
+        <!-- HK -->
+        <div class="region-card">
+          <div class="region-head">
+            <strong class="body-sb" style="color: var(--white);">🇭🇰 中国香港 (Hong Kong)</strong>
+            <span class="region-ping text-green">延迟 20 - 35ms</span>
+          </div>
+          <ul class="region-traits caption">
+            <li><strong>优势：</strong>物理距离最近，IEPL 专线直达，网页浏览与外贸交互近乎本地零感延迟。</li>
+            <li><strong>局限：</strong>OpenAI (ChatGPT) 与 TikTok 官方未对香港开放，直连会被严格锁区。</li>
+            <li><strong>推荐场景：</strong>网页浏览、YouTube 4K、日常办公、GitHub 提交。</li>
+          </ul>
+        </div>
+
+        <!-- JP -->
+        <div class="region-card">
+          <div class="region-head">
+            <strong class="body-sb" style="color: var(--white);">🇯🇵 日本 (Japan)</strong>
+            <span class="region-ping text-green">延迟 40 - 60ms</span>
+          </div>
+          <ul class="region-traits caption">
+            <li><strong>优势：</strong>东亚高质量机房，延迟极低，ChatGPT 全面支持，原生 IP 支持 AbemaTV、DMM、Netflix 日区。</li>
+            <li><strong>局限：</strong>晚高峰日本公网海缆偶尔拥堵，必须挑选具备 BGP 专线保障的机场。</li>
+            <li><strong>推荐场景：</strong>动漫追番、ChatGPT 交互、Steam 亚服联机。</li>
+          </ul>
+        </div>
+
+        <!-- SG -->
+        <div class="region-card">
+          <div class="region-head">
+            <strong class="body-sb" style="color: var(--white);">🇸🇬 新加坡 (Singapore)</strong>
+            <span class="region-ping text-cyan">延迟 50 - 75ms</span>
+          </div>
+          <ul class="region-traits caption">
+            <li><strong>优势：</strong>东南亚网络中枢，对 OpenAI、Claude、Gemini 的合规支持极为友好，风控拦截极低。</li>
+            <li><strong>局限：</strong>物理距离稍远，游戏延迟略逊于香港。</li>
+            <li><strong>推荐场景：</strong>全天候 AI 辅助开发、国际外贸投流、学术论文检索。</li>
+          </ul>
+        </div>
+
+        <!-- US -->
+        <div class="region-card">
+          <div class="region-head">
+            <strong class="body-sb" style="color: var(--white);">🇺🇸 美国 (United States)</strong>
+            <span class="region-ping text-orange">延迟 140 - 180ms</span>
+          </div>
+          <ul class="region-traits caption">
+            <li><strong>优势：</strong>全球数字内容母港，所有海外流媒体（Disney+、Hulu、Max）与 AI 平台 100% 支持原生内容。</li>
+            <li><strong>局限：</strong>太平洋跨洋光缆物理延迟固定，打开小网页略有感知延迟。</li>
+            <li><strong>推荐场景：</strong>大文件下载、美区全版权追剧、美区银行账户管理。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- BGP Routing Explanation -->
+    <section class="content-section">
+      <h2 class="h3 section-title">二、为什么专线机场的 BGP 智能入口至关重要？</h2>
+      <div class="bgp-info-box">
+        <p class="body" style="color: var(--grey); line-height: 1.8;">
+          在国内，中国电信、中国联通、中国移动之间存在明显的跨网互联壁垒。如果一家机场仅提供单线电信入口，当移动宽带用户连接时，流量必须绕道省际互联互通网关，导致本地延迟暴涨 80ms 甚至丢包。<br/><br/>
+          <strong>优质专线机场（如光速云）采用全国 BGP 多线接入：</strong>入口服务器同时连接四大运营商骨干网，系统通过 BGP Anycast 自动识别用户本地宽带类型，将电信用户调度到电信专属入网点，联通用户调度到联通入网点。进站后通过内网物理光纤直通香港落地，实现“三网全绿、全天零丢包”。
+        </p>
+      </div>
+    </section>
+
+    <!-- Related Links -->
+    <section class="content-section">
+      <h2 class="h3 section-title">三、相关专题深入</h2>
+      <div class="cluster-grid">
+        <a href="/faq-master#ai-streaming" class="cluster-card">
+          <span class="cluster-pill">AI 与流媒体</span>
+          <strong class="body-sb" style="color: var(--white);">ChatGPT 1020 与 Netflix 锁区排查 →</strong>
+          <p class="caption muted">如何选择原生住宅 IP 彻底消除 OpenAI 风控拦截与验证码。</p>
+        </a>
+        <a href="/jichang" class="cluster-card">
+          <span class="cluster-pill">专线横评</span>
+          <strong class="body-sb" style="color: var(--white);">2026 专线机场天梯榜与测速 →</strong>
+          <p class="caption muted">查看 42 家主流品牌在香港、日本节点的实测晚高峰延迟与带宽。</p>
+        </a>
+        <a href="/brands" class="cluster-card">
+          <span class="cluster-pill">品牌总库</span>
+          <strong class="body-sb" style="color: var(--white);">42 家品牌节点数据库检索 →</strong>
+          <p class="caption muted">支持按 IEPL 专线、VLESS 协议与节点数量进行多维筛选。</p>
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+.category-page { padding-top: 24px; padding-bottom: 80px; }
+.breadcrumb-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.category-header { border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 32px; margin-bottom: 36px; }
+.category-tag-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.category-badge { background: rgba(0, 230, 118, 0.12); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); font-family: monospace; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+.category-title { color: var(--white); font-size: clamp(26px, 3.5vw, 38px); margin-bottom: 14px; }
+.category-lead { font-size: 16px; line-height: 1.7; max-width: 860px; }
+.content-section { margin-bottom: 44px; }
+.section-title { color: var(--white); font-size: 20px; margin-bottom: 18px; border-left: 3px solid #00e676; padding-left: 10px; }
+.regions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.region-card { background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.region-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.04); padding-bottom: 10px; }
+.region-ping { font-family: monospace; font-size: 12px; font-weight: 700; }
+.text-green { color: #00e676; }
+.text-cyan { color: #00e5ff; }
+.text-orange { color: #ffb300; }
+.region-traits { padding-left: 18px; display: flex; flex-direction: column; gap: 6px; line-height: 1.6; color: rgba(255, 255, 255, 0.8); }
+.bgp-info-box { background: #0d121c; border: 1px solid rgba(0, 230, 118, 0.2); border-radius: 12px; padding: 24px; }
+.cluster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.cluster-card { background: #0d121c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.16s ease; }
+.cluster-card:hover { border-color: #00e676; }
+.cluster-pill { font-size: 11px; font-family: monospace; color: #00e676; }
+</style>

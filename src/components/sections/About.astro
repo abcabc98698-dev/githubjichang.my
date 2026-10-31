@@ -4,11 +4,12 @@ import ScrollWords from "../ScrollWords.astro";
 import ScrollFade from "../ScrollFade.astro";
 const { about } = site;
 ---
-<section id="about-alt" class="about">
+<section id="about" class="about">
+  <span id="about-alt" aria-hidden="true" style="position: absolute; top: 0; left: 0;"></span>
   <div class="about-stage">
     <div class="about-parallax" data-parallax>
       <div class="about-media">
-        <img src="/assets/portrait.webp" alt={`${site.name}, ${site.role.toLowerCase()}`} loading="lazy" />
+        <img src="/assets/portrait.webp" alt={`${site.name} 独立网络工程师与架构师`} loading="lazy" />
       </div>
     </div>
     <div class="about-scrim" aria-hidden="true"></div>
@@ -20,16 +21,16 @@ const { about } = site;
       </div>
       <div class="about-bio-row container">
         <div class="about-bio-col">
-          <p class="body muted">ABOUT</p>
+          <p class="body-sb" style="color: #00e676; letter-spacing: 0.1em; font-family: monospace;">OBSERVATORY INTEL</p>
           <ScrollFade>
             <div class="about-paragraphs">
               <p class="body balance">{about.bio}</p>
               <p class="body balance">
-                {about.contactLead} <a href={`mailto:${site.email}`} style="color: var(--white)">{site.email}</a> {about.contactTail}
+                {about.contactLead} <a href={`mailto:${site.email}`} style="color: var(--white); text-decoration: underline;">{site.email}</a> {about.contactTail}
               </p>
             </div>
           </ScrollFade>
-          <p class="body muted">{site.name.toUpperCase()} — {site.year}</p>
+          <p class="caption muted" style="font-family: monospace;">GITHUB JICHANG OBSERVATORY — 2026</p>
         </div>
       </div>
     </div>

@@ -1,0 +1,167 @@
+---
+import Base from "../layouts/Base.astro";
+import Topbar from "../components/Topbar.astro";
+import Footer from "../components/sections/Footer.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../lib/site";
+
+const termsJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "首页",
+        "item": "https://githubjichang.my",
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "服务条款与评测准则",
+        "item": "https://githubjichang.my/terms",
+      },
+    ],
+  },
+];
+---
+<Base
+  title={`服务条款与独立评测方法论准则 | ${site.name}`}
+  description="github机场 官方服务条款、免责声明与网络评测方法论标准。规定数据采集时间窗口、退款争议提示与当地法律合规要求。"
+  keywords={["服务条款", "评测方法论", "免责声明", "网络测评规范", "github机场"]}
+  jsonLd={termsJsonLd}
+>
+  <Topbar path="/terms" />
+  <main class="legal-page container">
+    <nav class="breadcrumb-bar" aria-label="Breadcrumb">
+      <a href="/" class="caption muted">首页</a>
+      <span class="caption muted">/</span>
+      <span class="caption" style="color: var(--white);">服务条款</span>
+    </nav>
+
+    <header class="legal-header">
+      <div class="legal-badge-row">
+        <span class="legal-badge">EDITORIAL INTEGRITY</span>
+        <span class="caption muted">最后修订：2026年10月 · 独立网络观测台</span>
+      </div>
+      <h1 class="h1 legal-title">服务条款与独立评测方法论准则</h1>
+      <p class="body muted balance legal-lead">
+        欢迎使用 {site.name}（githubjichang.my）。使用本站即代表您同意遵循以下关于网络测评数据引用、第三方订购责任与当地法律合规之准则。
+      </p>
+    </header>
+
+    <article class="legal-article">
+      <section class="legal-section">
+        <h2 class="h3 section-title">1. 网络测速与遥测数据的方法论基准</h2>
+        <p class="body text-p">
+          本站展示的 42 家机场延迟（ms）、峰值速率（Mbps）及流媒体解锁状态，均基于我们在中国大陆典型运营商（电信、联通、移动）环境下，通过自动化脚本实机测算所得。测评明确区分为：<strong>非高峰平稳期实测</strong>与<strong>晚高峰（20:00-23:00）极限拥堵压力测试</strong>。<br/><br/>
+          由于跨国海底光缆割接、上游机房维护、用户本地 Wi-Fi 质量等不可控因素，实际使用体验可能因人因地而异。本站数据仅供技术参考与横向选购对比，不构成对任何第三方服务商可用性的商业法律担保。
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="h3 section-title">2. 订购风险提示与小额月付原则</h2>
+        <p class="body text-p">
+          跨境网络服务商属于第三方独立运营主体，本站不直接销售任何带宽流量包，亦不代收用户资金。您通过本站链接前往第三方平台进行的充值与订阅，其合同履行、退款政策与售后服务由该服务商全权负责。<br/><br/>
+          <strong>我们郑重提示：</strong>在购买任何不知名或运营年限较短的品牌时，<strong>请坚决优先选择小额月付体验</strong>，切忌一次性购买大额包年或多年套餐，以防范商家因现金流断裂导致的跑路损失。
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="h3 section-title">3. 当地法律法规与合规底线</h2>
+        <p class="body text-p">
+          所有使用本站资讯与推荐工具的用户，<strong>必须严格遵守所在国家与地区的法律法规</strong>。本站技术文档与评测矩阵仅面向跨境科研文献查阅、海外合规贸易往来、跨境电商投流、开源项目开发协作与合法文化娱乐交流。严禁利用本站推荐的任何代理工具从事破坏网络安全、侵犯版权、散布虚假信息或危害公共安全的任何违法犯罪活动。
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="h3 section-title">4. 知识产权与内容引用规范</h2>
+        <p class="body text-p">
+          本站所撰写的原创技术科普（如协议底层对比、排障指南、跑路前夕征兆分析等）版权归 {site.name} 团队所有。个人博客或非商业论坛在完整保留出处链接（https://githubjichang.my）的前提下允许规范引用，严禁未经授权的商业化全文采集、洗稿或批量镜像搬运。
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="h3 section-title">5. 争议处置与免责声明</h2>
+        <p class="body text-p">
+          在法律允许的最大范围内，本站不对因使用或无法使用本站资讯、第三方节点断流、商家失联所导致的直接或间接商业损失承担附带责任。如对收录内容或品牌版权有异议，请致信 <code class="code-tag">{site.email}</code> 提出下架或修正申请。
+        </p>
+      </section>
+    </article>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+.legal-page {
+  padding-top: 24px;
+  padding-bottom: 80px;
+}
+.breadcrumb-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.legal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 32px;
+  margin-bottom: 40px;
+}
+.legal-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.legal-badge {
+  background: rgba(0, 230, 118, 0.12);
+  color: #00e676;
+  border: 1px solid rgba(0, 230, 118, 0.3);
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.legal-title {
+  color: var(--white);
+  font-size: clamp(26px, 3.5vw, 36px);
+  margin-bottom: 16px;
+}
+.legal-lead {
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 800px;
+}
+.legal-article {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  max-width: 840px;
+}
+.legal-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.section-title {
+  color: var(--white);
+  font-size: 18px;
+  border-left: 3px solid #00e676;
+  padding-left: 10px;
+}
+.text-p {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14.5px;
+  line-height: 1.8;
+}
+.code-tag {
+  background: rgba(255, 255, 255, 0.1);
+  color: #00e676;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+</style>

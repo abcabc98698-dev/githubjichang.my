@@ -1,8 +1,7 @@
 ---
 import { site } from "../lib/site";
 import Icon from "./Icon.astro";
-// The link for the current page is white, the rest sit at 60% (Framer current-page link style).
-// Pages pass their own path ("/", "/404", "/projects/<slug>"), without the trailing slash.
+
 interface Props {
   path: string;
 }
@@ -12,11 +11,23 @@ const isCurrent = (href: string) => href === path;
 <header class="topbar" data-topbar>
   <div class="topbar-bar container">
     <div class="topbar-logo">
-      <a href="/" class="body" style="color: var(--white)">{site.name}</a>
-      <p class="body muted">{site.role}</p>
+      <a href="/" class="body-sb" style="color: var(--white); font-size: 18px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px;" aria-label={`${site.name} - 首页`}>
+        <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #00e676; box-shadow: 0 0 10px #00e676;"></span>
+        {site.name}
+      </a>
+      <p class="caption muted" style="font-size: 12px; margin-top: 2px;">{site.role}</p>
     </div>
     <nav class="topbar-links" aria-label="Primary">
-      {site.nav.map((l) => <a class:list={["body-sb", { "is-current": isCurrent(l.href) }]} href={l.href} aria-current={isCurrent(l.href) ? "page" : undefined}>{l.label}</a>)}
+      {site.nav.map((l) => (
+        <a
+          class:list={["body-sb", { "is-current": isCurrent(l.href) }]}
+          href={l.href}
+          aria-current={isCurrent(l.href) ? "page" : undefined}
+          style={l.href === "/#flagship" ? "color: #00e676; font-weight: 600;" : undefined}
+        >
+          {l.label}
+        </a>
+      ))}
     </nav>
     <button type="button" class="topbar-menu" aria-label="Open menu" aria-expanded="false" data-menu-btn>
       <span class="topbar-icon" data-icon-open><Icon name="menu" size={24} stroke={1} /></span>
@@ -24,6 +35,15 @@ const isCurrent = (href: string) => href === path;
     </button>
   </div>
   <nav class="topbar-mobile" aria-label="Mobile" aria-hidden="true" data-mobile-nav>
-    {site.nav.map((l) => <a class:list={["h3", { "is-current": isCurrent(l.href) }]} href={l.href} tabindex="-1">{l.label}</a>)}
+    {site.nav.map((l) => (
+      <a
+        class:list={["h3", { "is-current": isCurrent(l.href) }]}
+        href={l.href}
+        tabindex="-1"
+        style={l.href === "/#flagship" ? "color: #00e676;" : undefined}
+      >
+        {l.label}
+      </a>
+    ))}
   </nav>
 </header>

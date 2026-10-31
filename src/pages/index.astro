@@ -2,26 +2,76 @@
 import Base from "../layouts/Base.astro";
 import Topbar from "../components/Topbar.astro";
 import Hero from "../components/sections/Hero.astro";
+import Flagship from "../components/sections/Flagship.astro";
+import Observatory from "../components/sections/Observatory.astro";
+import BrandDirectory from "../components/sections/BrandDirectory.astro";
+import Clients from "../components/sections/Clients.astro";
 import About from "../components/sections/About.astro";
-import Awards from "../components/sections/Awards.astro";
-import Principles from "../components/sections/Principles.astro";
 import Ticker from "../components/sections/Ticker.astro";
-import Services from "../components/sections/Services.astro";
-import Gallery from "../components/sections/Gallery.astro";
 import FAQ from "../components/sections/FAQ.astro";
 import Contact from "../components/sections/Contact.astro";
 import Footer from "../components/sections/Footer.astro";
+import { BRANDS } from "../data/brands";
+import { FAQS } from "../data/faqs";
+
+const origin = "https://githubjichang.my";
+
+// Structured Data for SEO / GEO Rich Snippets
+const indexJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "2026 年 42 家机场品牌综合评测榜单",
+    "description": "基于真实晚高峰测速、IEPL/IPLC专线、AI与流媒体解锁的42家机场品牌清单",
+    "itemListElement": BRANDS.map((b, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": b.name,
+      "url": `${origin}/brands/${b.id}`,
+      "description": b.tagline,
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": FAQS.map((faq) => ({
+      "@type": "Question",
+      "name": faq.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.a,
+      },
+    })),
+  },
+];
 ---
-<Base>
+<Base
+  title="github机场 · 2026 专线网络测评观测台 · 42家机场品牌数据库"
+  description="2026年 42 家机场品牌深度实测。涵盖光速云、飞猫云、微风网络等主流 IEPL/IPLC 专线，提供晚高峰延迟测速报告、流媒体与 ChatGPT 原生 IP 解锁矩阵、全平台客户端（Clash / 小火箭）免配置落地指南。"
+  keywords={[
+    "github机场",
+    "githubjichang.my",
+    "2026机场推荐",
+    "光速云",
+    "IEPL专线机场",
+    "IPLC专线",
+    "便宜机场",
+    "不限时不过期机场",
+    "Clash Verge Rev 下载",
+    "Shadowrocket 小火箭配置",
+    "ChatGPT 节点解锁"
+  ]}
+  jsonLd={indexJsonLd}
+>
   <Topbar path="/" />
   <main>
     <Hero />
+    <Flagship />
+    <Observatory />
+    <BrandDirectory />
+    <Clients />
     <About />
-    <Awards />
-    <Principles />
     <Ticker />
-    <Services />
-    <Gallery />
     <FAQ />
     <Contact />
   </main>

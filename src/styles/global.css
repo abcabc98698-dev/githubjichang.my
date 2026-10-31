@@ -1,4 +1,4 @@
-/* Elias Vent design tokens (Framer color styles) */
+/* Modern Independent Portfolio Design System Tokens */
 :root {
   --white: rgb(255, 255, 255);
   --black: rgb(18, 18, 18);
@@ -67,7 +67,8 @@ button { font: inherit; }
 .topbar { position: sticky; top: 0; z-index: 10; width: 100%; display: flex; flex-direction: column; align-items: center; }
 .topbar-bar { position: relative; z-index: 5; display: flex; justify-content: space-between; align-items: center; padding: 20px; }
 .topbar-logo { display: flex; flex-direction: column; gap: 2px; }
-.topbar-links { display: flex; align-items: center; gap: 24px; }
+.topbar-links { display: flex; align-items: center; gap: 14px; flex-wrap: nowrap; }
+.topbar-links a { font-size: 13px; white-space: nowrap; }
 .topbar-menu { display: none; position: relative; width: 28px; height: 28px; padding: 0; border: 0; background: none; color: var(--white); cursor: pointer; }
 .topbar-icon { position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; transition: opacity 0.45s var(--ease-out); }
 .topbar-mobile {
@@ -254,15 +255,6 @@ textarea.input { height: auto; min-height: 120px; padding: 16px 18px; resize: no
   .footer-col { width: 100%; align-items: flex-start; text-align: start; }
   .footer-col a { width: 100%; }
 }
-
-/* ---------- Store card ---------- */
-.store-card {
-  position: fixed; right: 20px; bottom: 66px; z-index: 10; width: 140px; height: 38px;
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-  background: var(--white); color: var(--black); border-radius: 24px; font-size: 12px; font-weight: 600; letter-spacing: -0.02em;
-  transition: transform 0.14s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.store-card:active { transform: scale(0.98); }
 
 @media (prefers-reduced-motion: reduce) {
   .pc-ref-ltr, .topbar-icon, .award-row, .award-year { transition-duration: 0.01ms; }

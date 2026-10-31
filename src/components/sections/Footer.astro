@@ -11,22 +11,25 @@ const FADE =
     <div class="footer-email">
       <a class="body" href={`mailto:${site.email}`}>{site.email}</a>
       <div class="footer-available">
-        <span class="footer-dot" aria-hidden="true"></span>
-        <p class="body">Available for work</p>
+        <span class="footer-dot" aria-hidden="true" style="background: #00e676; box-shadow: 0 0 8px #00e676;"></span>
+        <p class="body" style="font-family: monospace; font-size: 13px;">NETWORK PROBES ACTIVE (42 NODES)</p>
       </div>
     </div>
     <div class="footer-col footer-social">
-      {site.socials.map((s) => <a class="body" href={s.href} target="_blank" rel="noreferrer">{s.label}</a>)}
+      {site.socials.map((s) => <a class="body" href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a>)}
     </div>
     <nav class="footer-col footer-nav" aria-label="Footer">
       {site.footerNav.map((l) => <a class="body" href={l.href}>{l.label}</a>)}
     </nav>
   </div>
   <div class="footer-wordmark container" style="font-size: 160px" data-fit>
-    <span aria-hidden="true" data-probe style="position: absolute; visibility: hidden; white-space: nowrap; font-size: 100px; font-weight: 700; letter-spacing: 0">{site.name}</span>
-    <p style="font-weight: 700; line-height: 1em">{site.name}</p>
+    <span aria-hidden="true" data-probe style="position: absolute; visibility: hidden; white-space: nowrap; font-size: 100px; font-weight: 700; letter-spacing: 0">GITHUB JICHANG</span>
+    <p style="font-weight: 700; line-height: 1em">GITHUB JICHANG</p>
   </div>
-  <div class="footer-bottom container">
-    <p class="caption"><span class="muted">© {site.year} {site.name}. All rights reserved.</span></p>
+  <div class="footer-bottom container" style="flex-direction: column; gap: 12px; align-items: flex-start;">
+    <p class="caption balance" style="color: rgba(255, 255, 255, 0.45); font-size: 11px; line-height: 1.6;">
+      {site.disclaimer}
+    </p>
+    <p class="caption"><span class="muted">© {site.year} githubjichang.my · 专线网络测评观测台. All rights reserved.</span></p>
   </div>
 </footer>

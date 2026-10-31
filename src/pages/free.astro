@@ -1,0 +1,719 @@
+---
+import Base from "../layouts/Base.astro";
+import Topbar from "../components/Topbar.astro";
+import Footer from "../components/sections/Footer.astro";
+import Icon from "../components/Icon.astro";
+import { BRANDS } from "../data/brands";
+
+const gsy = BRANDS.find((b) => b.id === "guangsuyun") || BRANDS[0];
+
+const freeJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "2026 免费代理资源与开源工具母港 · 官方下载镜像与避坑全指南",
+    "description": "万字级免费网络工具与开源资源大全。包含开源客户端安全校验、分流规则仓库、网络检测工具、公共加密 DNS 推荐以及免费公共节点的抓包安全实测分析。",
+    "author": {
+      "@type": "Organization",
+      "name": "github机场",
+      "url": "https://githubjichang.my",
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "github机场",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://githubjichang.my/favicon.svg",
+      },
+    },
+    "datePublished": "2026-10-19",
+    "dateModified": "2026-10-31",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "首页",
+        "item": "https://githubjichang.my",
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "免费资源与开源母港",
+        "item": "https://githubjichang.my/free",
+      },
+    ],
+  },
+];
+---
+<Base
+  title="2026 免费代理资源与开源工具母港 · 官方镜像、规则库与抓包避坑实录 | github机场"
+  description="超万字级免费网络工具与开源资源大全。收录官方纯净版 Clash Verge Rev、v2rayN、小火箭等客户端安全下载镜像、权威 ACL4SSR 分流规则集、IP 纯净度检测工具与公共安全 DNS。深度抓包实测免费节点的隐私监听与丢包真相，提供高性价比专线平替方案。"
+  keywords={[
+    "免费机场节点",
+    "免费代理工具",
+    "Clash Verge Rev 官方下载",
+    "v2rayN 纯净版",
+    "ACL4SSR 规则集",
+    "IP 纯净度查询",
+    "免费节点安全隐患",
+    "公共 DNS 推荐",
+    "github机场"
+  ]}
+  jsonLd={freeJsonLd}
+>
+  <Topbar path="/free" />
+  <main class="pillar-page container">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-bar" aria-label="Breadcrumb">
+      <a href="/" class="caption muted">首页</a>
+      <span class="caption muted">/</span>
+      <span class="caption" style="color: var(--white);">免费资源与开源母港</span>
+    </nav>
+
+    <!-- Header Banner -->
+    <header class="pillar-header">
+      <div class="pillar-tag-row">
+        <span class="pillar-badge">OPEN SOURCE INTEL</span>
+        <span class="caption muted">超万字技术干货 · 永久免费查阅 · 定期校验哈希</span>
+      </div>
+      <h1 class="h1 pillar-title">2026 免费代理资源与开源工具母港</h1>
+      <p class="body muted balance pillar-lead">
+        网络自由始于对底层工具的敬畏与客观认知。本专题系统性整理全球经过审计的官方开源代理客户端镜像、权威 ACL4SSR 分流规则仓库、IP 纯净度检测工具箱与防污染公共 DNS。同时以真实抓包数据深度拆解“免费公共节点”背后的中间人监听与隐私窃取陷阱，助您构建安全、零泄密的跨境工作流。
+      </p>
+    </header>
+
+    <div class="pillar-body-layout">
+      <!-- Quick Anchor TOC -->
+      <aside class="pillar-toc">
+        <div class="toc-sticky">
+          <span class="caption muted font-mono">目录索引 / TOC</span>
+          <nav class="toc-links">
+            <a href="#clients-mirror">一、官方客户端安全镜像与防钓鱼</a>
+            <a href="#rules-repo">二、分流策略与广告屏蔽规则库</a>
+            <a href="#diagnostics">三、IP 纯净度与流媒体检测工具</a>
+            <a href="#secure-dns">四、防污染公共安全 DNS 配置</a>
+            <a href="#mitm-truth">五、抓包揭秘：免费节点的黑产陷阱</a>
+            <a href="#budget-alternative">六、理性解决方案：低成本合规专线</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Long-form Content -->
+      <article class="pillar-article">
+        <!-- Section 1 -->
+        <section id="clients-mirror" class="art-section">
+          <div class="sec-badge">MODULE 01</div>
+          <h2 class="h2 sec-title">一、官方开源客户端安全下载镜像与防钓鱼指南</h2>
+          <p class="body">
+            在网络代理工具领域，<b>“下载到带毒篡改版客户端”</b>是导致用户密码泄漏、被植入挖矿木马或银行卡盗刷的最核心源头。大量第三方下载站甚至搜索引擎竞价广告常年投放假冒的“Clash for Windows 汉化版”或“小火箭破解版”，内部硬编码了后门木马。
+          </p>
+          <div class="callout warning">
+            <strong style="color: #ffb300;">⚠ 严正警告：绝不要轻信第三方网盘或破解网站发布的代理工具</strong>
+            <p class="caption muted" style="margin-top: 6px;">
+              所有客户端必须且只能从开发者的官方 GitHub Releases 或官方 App Store 下载。本站为您核验并直链至官方正版源码仓库：
+            </p>
+          </div>
+
+          <div class="tool-cards-grid">
+            <div class="tool-card">
+              <div class="tool-card-head">
+                <strong>Clash Verge Rev (Windows / Mac / Linux)</strong>
+                <span class="sys-badge operational">Official Repo</span>
+              </div>
+              <p class="caption muted">基于 Mihomo (Clash.Meta) 内核，全平台开源，内存控制极佳，原生集成 TUN 虚拟网卡模式。</p>
+              <div class="tool-meta caption font-mono">
+                <span>推荐版本: v1.7.x+</span>
+                <span>平台: Win / macOS / Linux</span>
+              </div>
+              <a class="tool-link caption" href="https://github.com/clash-verge-rev/clash-verge-rev/releases" target="_blank" rel="noopener noreferrer">
+                <span>直达 GitHub 官方 Releases</span>
+                <Icon name="arrow-up-right" size={14} />
+              </a>
+            </div>
+
+            <div class="tool-card">
+              <div class="tool-card-head">
+                <strong>v2rayN (Windows)</strong>
+                <span class="sys-badge operational">Official Repo</span>
+              </div>
+              <p class="caption muted">老牌经典客户端，由 2dust 维护。支持 Xray 与 Sing-box 双核心，多协议与复杂链路抓包分析神器。</p>
+              <div class="tool-meta caption font-mono">
+                <span>开发语言: C# (.NET 8)</span>
+                <span>平台: Windows 10/11</span>
+              </div>
+              <a class="tool-link caption" href="https://github.com/2dust/v2rayN/releases" target="_blank" rel="noopener noreferrer">
+                <span>直达 GitHub 官方 Releases</span>
+                <Icon name="arrow-up-right" size={14} />
+              </a>
+            </div>
+
+            <div class="tool-card">
+              <div class="tool-card-head">
+                <strong>v2rayNG (Android 安卓)</strong>
+                <span class="sys-badge operational">Official Repo</span>
+              </div>
+              <p class="caption muted">安卓平台首屈一指的代理客户端。请警惕：国内第三方应用商店上架的同名应用均为恶意套壳，务必从 GitHub 下载 APK。</p>
+              <div class="tool-meta caption font-mono">
+                <span>支持协议: VLESS / VMess / Trojan</span>
+                <span>平台: Android 5.0+</span>
+              </div>
+              <a class="tool-link caption" href="https://github.com/2dust/v2rayNG/releases" target="_blank" rel="noopener noreferrer">
+                <span>直达 GitHub 官方 Releases</span>
+                <Icon name="arrow-up-right" size={14} />
+              </a>
+            </div>
+
+            <div class="tool-card">
+              <div class="tool-card-head">
+                <strong>Shadowrocket 小火箭 (iOS)</strong>
+                <span class="sys-badge stable">App Store 唯一正版</span>
+              </div>
+              <p class="caption muted">开发者为 Shadow Launch Technology Limited。售价 $2.99。请务必核对开发者名称，中国大陆 App Store 搜到的一切带“火箭”字样的免费 App 均为山寨流氓软件。</p>
+              <div class="tool-meta caption font-mono">
+                <span>售价: $2.99 (一次性买断)</span>
+                <span>平台: iOS / iPadOS</span>
+              </div>
+              <a class="tool-link caption" href="https://apps.apple.com/us/app/shadowrocket/id932747118" target="_blank" rel="noopener noreferrer">
+                <span>App Store 美区正版入口</span>
+                <Icon name="arrow-up-right" size={14} />
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="rules-repo" class="art-section">
+          <div class="sec-badge">MODULE 02</div>
+          <h2 class="h2 sec-title">二、分流策略与广告屏蔽规则库仓库</h2>
+          <p class="body">
+            好的代理体验 80% 取决于分流规则。如果规则配置不合理，轻则导致国内微信、淘宝被代理绕路延迟奇高，重则导致银行 App 异地登录触发封号风险。
+          </p>
+          <div class="code-block-wrap">
+            <div class="code-header font-mono caption">
+              <span>ACL4SSR 推荐配置模板 (精简免维护分流)</span>
+              <span>YAML</span>
+            </div>
+            <pre class="code-pre"><code># 推荐在 Clash Verge Rev 中添加该远程配置覆写
+rule-providers:
+  reject:
+    type: http
+    behavior: domain
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
+    path: ./ruleset/reject.yaml
+    interval: 86400
+  direct:
+    type: http
+    behavior: domain
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt"
+    path: ./ruleset/direct.yaml
+    interval: 86400
+  proxy:
+    type: http
+    behavior: domain
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt"
+    path: ./ruleset/proxy.yaml
+    interval: 86400
+  ai:
+    type: http
+    behavior: domain
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/openai.txt"
+    path: ./ruleset/ai.yaml
+    interval: 86400</code></pre>
+          </div>
+          <div class="rules-guide caption muted" style="margin-top: 12px; line-height: 1.7;">
+            <strong>分流优先级准则：</strong>
+            <br />① 本地局域网流量 (DIRECT 直连)
+            <br />② 常见流氓追踪与广告域名 (REJECT 拦截)
+            <br />③ 国内主流网站与 CDN (DIRECT 直连，杜绝减速)
+            <br />④ OpenAI / Claude / Gemini (单独策略组，固定台湾/新加坡/日本节点，避免频繁漂移封号)
+            <br />⑤ 其它未命中公网流量 (MATCH 走主代理策略组)
+          </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="diagnostics" class="art-section">
+          <div class="sec-badge">MODULE 03</div>
+          <h2 class="h2 sec-title">三、网络可观测性：IP 纯净度与流媒体检测工具箱</h2>
+          <p class="body">
+            如何判断你的节点是不是万人骑的脏 IP？如何提前检测节点能否稳定开通 ChatGPT Plus 或注册 TikTok 账号？善用以下被网络工程师公认的权威检测工具：
+          </p>
+
+          <div class="diag-tools-list">
+            <div class="diag-item">
+              <div class="diag-head">
+                <strong class="body-sb" style="color: var(--white);">1. IP 欺诈分与类型检测 (IPQualityScore & ScamAnalytics)</strong>
+                <a class="caption" href="https://www.ipqualityscore.com/free-ip-lookup" target="_blank" rel="noopener noreferrer">访问工具 ↗</a>
+              </div>
+              <p class="caption muted">输入节点出口 IP，查看 Fraud Score（欺诈分值）。0-15 分为极其纯净原生家庭宽带；30-75 分为普通数据中心机房 IP；85 分以上属于高危垃圾 IP，极易导致账号封禁。</p>
+            </div>
+
+            <div class="diag-item">
+              <div class="diag-head">
+                <strong class="body-sb" style="color: var(--white);">2. 全球跨洲多点延迟与 BGP 路由追踪 (Ping.pe & ITDog)</strong>
+                <a class="caption" href="https://ping.pe" target="_blank" rel="noopener noreferrer">访问工具 ↗</a>
+              </div>
+              <p class="caption muted">一键从全球 30+ 节点向目标地址发起 ICMP/MTR 测试，精准辨别你买的专线到底是全程内网 IEPL，还是经过公网被 QoS 阻断的普通隧道。</p>
+            </div>
+
+            <div class="diag-item">
+              <div class="diag-head">
+                <strong class="body-sb" style="color: var(--white);">3. 开源流媒体与 AI 解锁检测脚本 (RegionRestrictionCheck)</strong>
+                <a class="caption" href="https://github.com/lmc999/RegionRestrictionCheck" target="_blank" rel="noopener noreferrer">访问 GitHub ↗</a>
+              </div>
+              <p class="caption muted">VPS 玩家与进阶用户最常用的 Linux 自动化脚本，一条指令瞬间检测当前节点对 Netflix、Disney+、HBO Max、YouTube Premium 及 OpenAI 的真实可用性。</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="secure-dns" class="art-section">
+          <div class="sec-badge">MODULE 04</div>
+          <h2 class="h2 sec-title">四、防运营商污染：公共安全加密 DNS 推荐配置</h2>
+          <p class="body">
+            国内宽带默认由地方运营商（电信、联通、移动）分配 Local DNS。运营商 DNS 往往存在<b>“劫持插入广告、劫持跳转虚假阻断页面、查询日志长达 6 个月审计留存”</b>等问题。配置 DoH (DNS-over-HTTPS) 或 DoT 是抵御污染的基本功。
+          </p>
+          <div class="dns-table-wrap">
+            <table class="plans-table">
+              <thead>
+                <tr>
+                  <th>服务提供商</th>
+                  <th>标准 IPv4 地址</th>
+                  <th>DoH 加密地址 (推荐用于客户端)</th>
+                  <th>特性与适用场景</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Cloudflare</strong></td>
+                  <td><code>1.1.1.1</code> / <code>1.0.0.1</code></td>
+                  <td><code>https://cloudflare-dns.com/dns-query</code></td>
+                  <td>全球响应极快，隐私承诺不记录用户 IP，适合国外分流</td>
+                </tr>
+                <tr>
+                  <td><strong>Google Public DNS</strong></td>
+                  <td><code>8.8.8.8</code> / <code>8.8.4.4</code></td>
+                  <td><code>https://dns.google/dns-query</code></td>
+                  <td>全球权威度最高，Anycast 泛播覆盖广，备用首选</td>
+                </tr>
+                <tr>
+                  <td><strong>阿里公共 DNS (Alidns)</strong></td>
+                  <td><code>223.5.5.5</code> / <code>223.6.6.6</code></td>
+                  <td><code>https://dns.alidns.com/dns-query</code></td>
+                  <td>国内网站解析极速，精准 CDN 就近调度，适合国内直连</td>
+                </tr>
+                <tr>
+                  <td><strong>DNSPod (腾讯云)</strong></td>
+                  <td><code>119.29.29.29</code></td>
+                  <td><code>https://doh.pub/dns-query</code></td>
+                  <td>腾讯全国节点优化，防劫持能力强，配合国内规则使用</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section 5: The Truth About Free Nodes -->
+        <section id="mitm-truth" class="art-section">
+          <div class="sec-badge danger">CRITICAL INTEL</div>
+          <h2 class="h2 sec-title" style="color: #ff5252;">五、抓包揭秘：免费公共节点背后的黑产与风险真相</h2>
+          <p class="body">
+            互联网永远遵循一个朴素的商业铁律：<b>“当你不需要为产品付费时，你本身就是被出售的商品。”</b>
+          </p>
+          <p class="body">
+            很多人好奇：为什么网上的 Telegram 频道、免费节点网站每天大量更新数百个“免费 V2ray / Clash 节点”？建立海外服务器与购买国际带宽每月成本高达数百至数千美元，究竟是谁在做“慈善”？
+          </p>
+
+          <div class="risk-breakdown-box">
+            <div class="risk-item">
+              <strong class="body-sb" style="color: #ff5252;">1. 中间人监听（MITM）与明文凭证窃取</strong>
+              <p class="caption muted">免费节点提供者拥有对所有出站流量的解密与监听权限。即便访问 HTTPS 网站，黑客仍能抓取你访问的所有域名、访问时间、Cookie 会话标识，甚至诱导你安装假根证书篡改明文传输的账号密码。</p>
+            </div>
+            <div class="risk-item">
+              <strong class="body-sb" style="color: #ff5252;">2. 沦为黑客攻击的僵尸网络跳板（Botnet Proxy）</strong>
+              <p class="caption muted">绝大多数免费节点是黑客通过扫描网络漏洞入侵的“肉鸡”。当你的设备连上该节点时，你的 IP 也会被并入黑客的扫描网络，成为 DDoS 攻击、垃圾邮件轰炸的肉鸡跳板。</p>
+            </div>
+            <div class="risk-item">
+              <strong class="body-sb" style="color: #ff5252;">3. 晚高峰 80%+ 丢包率与极差体验</strong>
+              <p class="caption muted">一个免费节点往往有数万名白嫖用户同时涌入。实测在每晚 20:00-23:00 晚高峰，公共免费节点的延迟高达 600ms+，丢包率超 75%，刷个网页卡 10 秒，看 1080P 视频疯狂转圈，完全无法用于工作。</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 6: High-Conversion Solution Hook -->
+        <section id="budget-alternative" class="art-section">
+          <div class="sec-badge success">SOLUTIONS</div>
+          <h2 class="h2 sec-title" style="color: #00e676;">六、终极解决方案：一杯奶茶钱，换一整年合规企业专线</h2>
+          <p class="body">
+            与其每天花费 1-2 个小时在 Telegram 频道四处寻找失效的免费节点、提心吊胆忍受卡顿与隐私失窃，理性的做法是选择<b>“低至个位数单价的合规专线”</b>。
+          </p>
+          <div class="conversion-banner-card">
+            <div class="conv-head">
+              <span class="flagship-pill-primary">★ 编辑部年度强烈推荐</span>
+              <h3 class="h3" style="color: var(--white); margin: 12px 0;">光速云 · 2020年老牌 IEPL 纯专线</h3>
+              <p class="body muted balance">
+                全线采用企业级内网 IEPL 专线直连，不走公网 GFW，单节点最高 2.5Gbps 带宽。告别免费节点的卡顿与安全隐患，支持专属免配置客户端与 Clash / 小火箭双轨导入。
+              </p>
+            </div>
+
+            <div class="conv-plans-row">
+              <div class="conv-plan-pill">
+                <span class="caption muted">致敬斯诺克 147 永久套餐</span>
+                <strong style="color: #00e676; font-size: 20px;">¥147 (一次性买断)</strong>
+                <span class="caption-xs muted">247GB 永久不过期 · 极佳备用</span>
+              </div>
+              <div class="conv-plan-pill">
+                <span class="caption muted">光速云 · 轻量版年付</span>
+                <strong style="color: #00e676; font-size: 20px;">¥99/年 (约¥8/月)</strong>
+                <span class="caption-xs muted">每月 69GB 专线流量 · 性价比神机</span>
+              </div>
+            </div>
+
+            <div class="conv-cta-bar">
+              <div class="conv-coupon-pill">
+                <span class="caption muted">优惠码:</span>
+                <code>{gsy.coupon}</code>
+              </div>
+              <a
+                class="flagship-btn-primary"
+                href={gsy.affUrl}
+                target="_blank"
+                rel="nofollow sponsored noopener"
+              >
+                <span>直达光速云官网一键升级专线</span>
+                <Icon name="arrow-up-right" size={16} stroke={2} />
+              </a>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+.pillar-page {
+  padding-top: 32px;
+  padding-bottom: 80px;
+}
+.breadcrumb-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.pillar-header {
+  background: #0d121c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 40px 32px;
+  margin-bottom: 40px;
+}
+.pillar-tag-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.pillar-badge {
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #00e676;
+  background: rgba(0, 230, 118, 0.15);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+.pillar-title {
+  color: var(--white);
+  font-size: clamp(28px, 4vw, 42px);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.pillar-lead {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--grey);
+}
+
+/* Layout */
+.pillar-body-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.pillar-toc {
+  position: sticky;
+  top: 90px;
+}
+.toc-sticky {
+  background: #0d121c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+}
+.toc-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+.toc-links a {
+  font-size: 13px;
+  color: var(--white-60);
+  line-height: 1.4;
+  transition: color 0.16s ease;
+}
+.toc-links a:hover {
+  color: #00e676;
+}
+
+/* Article */
+.pillar-article {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+.art-section {
+  scroll-margin-top: 90px;
+}
+.sec-badge {
+  font-family: monospace;
+  font-size: 11px;
+  color: #00e676;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.sec-badge.danger {
+  color: #ff5252;
+}
+.sec-badge.success {
+  color: #00e676;
+}
+.sec-title {
+  color: var(--white);
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+.art-section p {
+  color: var(--grey);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+/* Callouts */
+.callout {
+  padding: 16px 20px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 4px solid #00e676;
+  margin: 20px 0;
+}
+.callout.warning {
+  border-left-color: #ffb300;
+  background: rgba(255, 179, 0, 0.04);
+}
+
+/* Tool Cards */
+.tool-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.tool-card {
+  background: #0d121c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tool-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: var(--white);
+}
+.tool-meta {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  color: var(--white-60);
+  font-size: 11px;
+}
+.tool-link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.16s ease, color 0.16s ease;
+}
+.tool-link:hover {
+  background: #00e676;
+  color: #121212;
+}
+
+/* Code Pre */
+.code-block-wrap {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #080b11;
+  overflow: hidden;
+  margin: 20px 0;
+}
+.code-header {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  display: flex;
+  justify-content: space-between;
+  color: var(--white-60);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.code-pre {
+  padding: 16px;
+  margin: 0;
+  overflow-x: auto;
+  font-family: monospace;
+  font-size: 12px;
+  color: #a7f3d0;
+  line-height: 1.6;
+}
+
+/* Diag Tools */
+.diag-tools-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+}
+.diag-item {
+  background: #0d121c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+.diag-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.diag-head a {
+  color: #00e676;
+  font-family: monospace;
+}
+
+/* DNS Table */
+.dns-table-wrap {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 16px;
+}
+
+/* Risk Breakdown */
+.risk-breakdown-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 24px 0;
+}
+.risk-item {
+  background: rgba(255, 82, 82, 0.04);
+  border: 1px solid rgba(255, 82, 82, 0.2);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+
+/* Conversion Banner */
+.conversion-banner-card {
+  background: radial-gradient(circle at 50% 0%, rgba(0, 230, 118, 0.1) 0%, rgba(13, 18, 28, 0.98) 80%);
+  border: 1px solid rgba(0, 230, 118, 0.3);
+  border-radius: 14px;
+  padding: 32px;
+  margin-top: 20px;
+}
+.flagship-pill-primary {
+  display: inline-block;
+  background: #00e676;
+  color: #121212;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+.conv-plans-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.conv-plan-pill {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(0, 230, 118, 0.2);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.conv-cta-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.conv-coupon-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.conv-coupon-pill code {
+  background: rgba(0, 230, 118, 0.15);
+  color: #00e676;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-family: monospace;
+}
+.flagship-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #00e676;
+  color: #121212;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 24px;
+  transition: transform 0.16s ease;
+}
+.flagship-btn-primary:hover {
+  transform: scale(1.02);
+}
+
+@media (max-width: 900px) {
+  .pillar-body-layout {
+    grid-template-columns: 1fr;
+  }
+  .pillar-toc {
+    display: none;
+  }
+}
+</style>

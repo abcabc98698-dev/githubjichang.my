@@ -1,62 +1,172 @@
 ---
-import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 import "@fontsource/sora/400.css";
 import "@fontsource/sora/500.css";
 import "@fontsource/sora/600.css";
 import "@fontsource/sora/700.css";
 import "../styles/global.css";
 import { site } from "../lib/site";
-import StoreCard from "../components/StoreCard.astro";
 
 interface Props {
   title?: string;
   description?: string;
+  keywords?: string[];
+  ogImage?: string;
+  ogType?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  category?: string;
+  tags?: string[];
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
+
 const defaultTitle = `${site.name} | ${site.role}`;
+const defaultDescription = site.tagline;
+
 const {
   title = defaultTitle,
-  description = "Product & motion designer with a decade of turning complex products into simple, living experiences. Selected work, services and awards.",
+  description = defaultDescription,
+  keywords = ["github机场", "2026机场推荐", "IEPL专线", "IPLC专线", "网络测速", "ChatGPT解锁", "科学上网指南"],
+  ogImage: customOgImage,
+  ogType = "website",
+  publishedTime,
+  modifiedTime,
+  author = site.name,
+  category,
+  tags = [],
+  noindex = false,
+  jsonLd,
 } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL("/assets/og.jpg", Astro.site);
-const analytics = import.meta.env.PUBLIC_VERCEL_ANALYTICS === "true";
-const storeBadge = import.meta.env.PUBLIC_STORE_BADGE === "true";
+
+// Canonical and asset URL resolution bound 100% to site configuration
+const origin = Astro.site ? Astro.site.href.replace(/\/$/, "") : Astro.url.origin;
+const cleanPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const canonical = new URL(cleanPath, origin).href;
+const ogImage = new URL(customOgImage || "/assets/og.jpg", origin).href;
+
+// Webmaster Verification Codes
+const googleVerification = site.verification?.google || process.env.GOOGLE_SITE_VERIFICATION || "";
+const bingVerification = site.verification?.bing || process.env.BING_SITE_VERIFICATION || "";
+const shenmaVerification = site.verification?.shenma || process.env.SHENMA_SITE_VERIFICATION || "";
+const baiduVerification = site.verification?.baidu || process.env.BAIDU_SITE_VERIFICATION || "";
+
+// Structured data graph
+const defaultSchemas: Array<Record<string, unknown>> = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${origin}/#website`,
+    "url": origin,
+    "name": site.name,
+    "description": defaultDescription,
+    "inLanguage": "zh-CN",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "@id": `${origin}/#organization`,
+    "name": site.name,
+    "url": origin,
+    "logo": new URL("/favicon.svg", origin).href,
+    "image": ogImage,
+    "description": site.about.bio,
+    "email": site.email,
+    "telephone": site.phone.label,
+    "sameAs": site.socials.map((s) => s.href),
+  },
+];
+
+const structuredDataList = [
+  ...defaultSchemas,
+  ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []),
+];
 ---
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
+    <!-- Character Encoding & Viewport -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Metadata -->
     <title>{title}</title>
+    <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    <meta name="keywords" content={keywords.join(", ")} />
+    <meta name="author" content={author} />
+
+    <!-- Canonical URL (Self-referencing absolute HTTPS URL) -->
+    {!noindex && <link rel="canonical" href={canonical} />}
+
+    <!-- Search Engine Directives (Unified index/noindex directives) -->
+    <meta
+      name="robots"
+      content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"}
+    />
+    <meta
+      name="googlebot"
+      content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"}
+    />
+    <meta
+      name="bingbot"
+      content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"}
+    />
+    <meta
+      name="baiduspider"
+      content={noindex ? "noindex, nofollow" : "index, follow"}
+    />
+    <meta
+      name="yisouspider"
+      content={noindex ? "noindex, nofollow" : "index, follow"}
+    />
+
+    <!-- Webmaster Verification Meta Tags (Directly in HTML source, ready for instant verification) -->
+    {googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+    {bingVerification && <meta name="msvalidate.01" content={bingVerification} />}
+    {shenmaVerification && <meta name="shenma-site-verification" content={shenmaVerification} />}
+    {baiduVerification && <meta name="baidu-site-verification" content={baiduVerification} />}
+
+    <!-- Favicon & PWA Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#121212" />
-    <meta property="og:type" content="website" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:locale" content="zh_CN" />
+    {ogType === "article" && publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {ogType === "article" && modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+    {ogType === "article" && author && <meta property="article:author" content={author} />}
+    {ogType === "article" && category && <meta property="article:section" content={category} />}
+    {ogType === "article" && tags?.map((tag) => <meta property="article:tag" content={tag} />)}
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={title} />
+
+    <!-- JSON-LD Structured Data for Enhanced Rich Snippets -->
+    {structuredDataList.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
   </head>
   <body>
     <slot />
-    {storeBadge && <StoreCard />}
     <script>
       import "../scripts/entry";
     </script>
-    {analytics && (
-      <script>
-        import { inject } from "@vercel/analytics";
-        import { injectSpeedInsights } from "@vercel/speed-insights";
-        inject();
-        injectSpeedInsights();
-      </script>
-    )}
-    <GoogleAnalytics />
   </body>
 </html>
